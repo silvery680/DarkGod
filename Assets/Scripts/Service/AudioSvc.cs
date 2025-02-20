@@ -17,7 +17,7 @@ public class AudioSvc : MonoBehaviour
     public void InitSvc()
     {
         Instance = this;
-        Debug.Log("Init AudioService...");
+        PECommon.Log("Init AudioService...");
     }
 
     public void PlayBGMusic(string name, bool isLoop = true)

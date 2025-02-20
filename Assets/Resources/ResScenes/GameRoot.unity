@@ -625,7 +625,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1421561770}
+      objectReference: {fileID: 1421561771}
     - target: {fileID: 114741397206248630, guid: ca893275d47209f4ea1e70bc5004e1ae,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -647,6 +647,16 @@ Prefab:
       value: ClickRandBtn
       objectReference: {fileID: 0}
     - target: {fileID: 114741397206248630, guid: ca893275d47209f4ea1e70bc5004e1ae,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114034893001938416, guid: ca893275d47209f4ea1e70bc5004e1ae,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickEnterBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 114034893001938416, guid: ca893275d47209f4ea1e70bc5004e1ae,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine

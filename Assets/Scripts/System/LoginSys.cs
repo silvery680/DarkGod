@@ -15,12 +15,12 @@ public class LoginSys : SystemRoot
     public LoginWnd loginWnd;
     public CreateWnd createWnd;
 
-    public override void InitSys()
+    public override void InitSys() 
     {
         base.InitSys();
 
         Instance = this;
-        Debug.Log("Init LoginSystem");
+        PECommon.Log("Init LoginSystem");
     }
 
     /// <summary>
