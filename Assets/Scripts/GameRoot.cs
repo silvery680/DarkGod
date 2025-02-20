@@ -11,7 +11,9 @@ using UnityEngine;
 public class GameRoot : MonoBehaviour 
 {
     public static GameRoot Instance = null;
+
     public LoadingWnd loadingWnd;
+    public DynamicWnd dynamicWnd;
 
     private void Start()
     {
@@ -19,7 +21,20 @@ public class GameRoot : MonoBehaviour
         DontDestroyOnLoad(this);
         Debug.Log("Game Start...");
 
+        ClearUIRoot();
+
         Init();
+    }
+
+    private void ClearUIRoot()
+    {
+        Transform canvas = transform.Find("Canvas");
+        for (int i = 0; i < canvas.childCount; i ++)
+        {
+            canvas.GetChild(i).gameObject.SetActive(false);
+        }
+
+        dynamicWnd.SetWndState();
     }
 
     private void Init()
@@ -36,5 +51,15 @@ public class GameRoot : MonoBehaviour
 
         // 进入到登录场景并且加载相应的UI
         login.EnterLogin();
+    }
+
+    public static void AddTips(string tips)
+    {
+        Instance.dynamicWnd.AddTips(tips);
+    }
+
+    public static void SetLoadingWndState(bool isActive = true)
+    {
+        Instance.loadingWnd.SetWndState(isActive);
     }
 }

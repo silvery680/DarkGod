@@ -13,6 +13,7 @@ public class LoginSys : SystemRoot
     public static LoginSys Instance = null;
 
     public LoginWnd loginWnd;
+    public CreateWnd createWnd;
 
     public override void InitSys()
     {
@@ -34,5 +35,15 @@ public class LoginSys : SystemRoot
             loginWnd.SetWndState();
             AudioSvc.Instance.PlayBGMusic(Constants.BGLogin);
         });
+    }
+
+    public void RspLogin()
+    {
+        GameRoot.AddTips("登录成功");
+
+        // 打开角色创建界面
+        createWnd.SetWndState();
+        // 关闭登录界面
+        loginWnd.SetWndState(false);
     }
 }
