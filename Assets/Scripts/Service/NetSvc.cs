@@ -96,6 +96,10 @@ public class NetSvc : MonoBehaviour
                 case ErrorCode.WrongPass:
                     GameRoot.AddTips("密码错误");
                     break;
+                case ErrorCode.UpdateDBError:
+                    GameRoot.AddTips("网络不稳定");
+                    PECommon.Log("数据库更新错误", LogType.Error);
+                    break;
             };
             return;
         }
@@ -105,6 +109,10 @@ public class NetSvc : MonoBehaviour
             case CMD.RspLogin:
                 LoginSys.Instance.RspLogin(msg);
                 break;
+            case CMD.RspRename:
+                LoginSys.Instance.RspRename(msg);
+                break;
+
         }
     }
 }
