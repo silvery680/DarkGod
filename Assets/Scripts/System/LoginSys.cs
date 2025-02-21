@@ -6,6 +6,7 @@
 	Description ：登录系统
 *****************************************************/
 
+using PEProtocol;
 using UnityEngine;
 
 public class LoginSys : SystemRoot 
@@ -37,12 +38,21 @@ public class LoginSys : SystemRoot
         });
     }
 
-    public void RspLogin()
+    public void RspLogin(GameMsg msg)
     {
         GameRoot.AddTips("登录成功");
+        GameRoot.Instance.SetPlayerData(msg.rspLogin);
 
-        // 打开角色创建界面
-        createWnd.SetWndState();
+        if (msg.rspLogin.playerData.name == "")
+        {
+            // 打开角色创建界面
+            createWnd.SetWndState();
+        }
+        else
+        {
+            // TODO: 进入主城
+        }
+        
         // 关闭登录界面
         loginWnd.SetWndState(false);
     }

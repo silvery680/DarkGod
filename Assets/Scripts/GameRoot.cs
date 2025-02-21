@@ -6,6 +6,7 @@
 	Description ：游戏启动入口(单例)
 *****************************************************/
 
+using PEProtocol;
 using UnityEngine;
 
 public class GameRoot : MonoBehaviour 
@@ -63,5 +64,19 @@ public class GameRoot : MonoBehaviour
     public static void SetLoadingWndState(bool isActive = true)
     {
         Instance.loadingWnd.SetWndState(isActive);
+    }
+
+    private PlayerData playerData = null;
+    public PlayerData PlayerData
+    {
+        get
+        {
+            return playerData;
+        }
+    }
+
+    public void SetPlayerData(RspLogin data)
+    {
+        playerData = data.playerData;
     }
 }
