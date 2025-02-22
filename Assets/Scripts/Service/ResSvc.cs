@@ -19,7 +19,8 @@ public class ResSvc : MonoBehaviour
     public void InitSvc()
     {
         Instance = this;
-        InitRDNameCfg();
+        InitRDNameCfg(PathDefine.RDNameCfg);
+        InitMapCfg(PathDefine.MapCfg);
 
         PECommon.Log("Init ResSvc...");
     }
@@ -36,6 +37,9 @@ public class ResSvc : MonoBehaviour
         {
             float targetProgress = sceneAsync.progress / 0.9f;  // Unity的异步加载进度最大值是0.9，接近完成时会变慢
             float smoothProgress = Mathf.Lerp(lastProgress, targetProgress, 1f * Time.deltaTime);  // 使用Lerp实现更慢的过渡，每秒最多20%进度
+
+            // TOREMOVE 测试用，直接跳过加载
+            smoothProgress = targetProgress;
 
             GameRoot.Instance.loadingWnd.SetProgress(smoothProgress);
 
@@ -83,12 +87,12 @@ public class ResSvc : MonoBehaviour
     private List<string> manList = new List<string>();
     private List<string> womanList = new List<string>();
 
-    private void InitRDNameCfg()
+    private void InitRDNameCfg(string path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(PathDefine.RDNameCfg);
+        TextAsset xml = Resources.Load<TextAsset>(path);
         if (!xml)
         {
-            PECommon.Log("xml File:" + PathDefine.RDNameCfg + " not exist", LogType.Error);
+            PECommon.Log("xml File:" + path + " not exist", LogType.Error);
         }
         else
         {
@@ -139,6 +143,79 @@ public class ResSvc : MonoBehaviour
         }
 
         return rdName;
+    }
+    #endregion
+
+    #region 地图
+    private Dictionary<int, MapCfg> mapCfgDataDic = new Dictionary<int, MapCfg>();
+    private void InitMapCfg(string path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(path);
+        if (!xml)
+        {
+            PECommon.Log("xml File:" + path + " not exist", LogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);
+
+            XmlNodeList nodeList = doc.SelectSingleNode("root").ChildNodes;
+
+            foreach (XmlElement ele in nodeList)
+            {
+                if (ele.GetAttributeNode("ID") == null)
+                {
+                    continue;
+                }
+
+                int _ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+                MapCfg mc = new MapCfg()
+                {
+                    ID = _ID
+                };
+                
+
+                foreach (XmlElement e in ele.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "mapName":
+                            mc.mapName = e.InnerText;
+                            break;
+                        case "sceneName":
+                            mc.sceneName = e.InnerText;
+                            break;
+                        case "mainCamPos":
+                            {
+                                string[] valArr = e.InnerText.Split(',');
+                                mc.mainCamPos = new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
+                            }
+                            break;
+                        case "mainCamRote":
+                            {
+                                string[] valArr = e.InnerText.Split(',');
+                                mc.mainCamRote = new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
+                            }
+                            break;
+                        case "playerBornPos":
+                            {
+                                string[] valArr = e.InnerText.Split(',');
+                                mc.playerBornPos = new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
+                            }
+                            break;
+                        case "playerBornRote":
+                            {
+                                string[] valArr = e.InnerText.Split(',');
+                                mc.playerBornPos = new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
+                            }
+                            break;
+                    }
+                }
+
+                mapCfgDataDic.Add(_ID, mc);
+            }
+        }
     }
     #endregion
 }

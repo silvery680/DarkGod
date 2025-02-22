@@ -6,7 +6,9 @@
 	Description ：窗口类基类
 *****************************************************/
 
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public abstract class WindowRoot : MonoBehaviour 
@@ -81,6 +83,35 @@ public abstract class WindowRoot : MonoBehaviour
     protected void SetText(Text txt, int num = 0)
     {
         SetText(txt, num.ToString());
+    }
+
+    protected T GetOrAddComponent<T>(GameObject go) where T : Component
+    {
+        T t = go.GetComponent<T>();
+        if (t == null)
+        {
+            t = go.AddComponent<T>();
+        }
+        return t;
+    }
+
+    #endregion
+
+    #region Click Evts
+    protected void OnClickDown(GameObject go, Action<PointerEventData> cb)
+    {
+        PEListener listener = GetOrAddComponent<PEListener>(go);
+        listener.onClickDown = cb;
+    }
+    protected void OnClickUp(GameObject go, Action<PointerEventData> cb)
+    {
+        PEListener listener = GetOrAddComponent<PEListener>(go);
+        listener.onClickUp = cb;
+    }
+    protected void OnDrag(GameObject go, Action<PointerEventData> cb)
+    {
+        PEListener listener = GetOrAddComponent<PEListener>(go);
+        listener.onDrag = cb;
     }
     #endregion
 }

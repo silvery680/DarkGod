@@ -33,8 +33,7 @@ public class LoadingWnd : WindowRoot
         SetText(txtPrg, (int)(prg * 100) + "%");
         imgFG.fillAmount = prg;
 
-        float globalRate = 1.0F * Constants.ScreenStandardHeight / Screen.height;
-        float screenWidth = Screen.width * globalRate;
+        float screenWidth = Screen.width / PETools.GetGlobalRate();
         float posX = (screenWidth - 110) * prg;
 
         imgPoint.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX, 0);

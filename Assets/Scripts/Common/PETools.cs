@@ -25,5 +25,9 @@ public class PETools
         int val = rd.Next(min, max + 1);
         return val;
     }
-
+    
+    public static float GetGlobalRate()
+    {
+        return 1.0f * Screen.height / Constants.ScreenStandardHeight;
+    }
 }
