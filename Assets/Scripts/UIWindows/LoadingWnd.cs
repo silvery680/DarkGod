@@ -22,8 +22,6 @@ public class LoadingWnd : WindowRoot
     {
         base.InitWnd();
 
-        fgWidth = imgFG.GetComponent<RectTransform>().sizeDelta.x;
-
         SetText(txtTips, "这是一条游戏Tips");
         SetText(txtPrg, "0%");
         imgFG.fillAmount = 0;
@@ -35,7 +33,10 @@ public class LoadingWnd : WindowRoot
         SetText(txtPrg, (int)(prg * 100) + "%");
         imgFG.fillAmount = prg;
 
-        float posX = prg * fgWidth;
+        float globalRate = 1.0F * Constants.ScreenStandardHeight / Screen.height;
+        float screenWidth = Screen.width * globalRate;
+        float posX = (screenWidth - 110) * prg;
+
         imgPoint.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX, 0);
     }
 }

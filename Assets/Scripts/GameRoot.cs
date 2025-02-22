@@ -51,6 +51,8 @@ public class GameRoot : MonoBehaviour
         // 业务系统初始化
         LoginSys login = GetComponent<LoginSys>();
         login.InitSys();
+        MainCitySys mainCitySys = GetComponent<MainCitySys>();
+        mainCitySys.InitSys();
 
         // 进入到登录场景并且加载相应的UI
         login.EnterLogin();
