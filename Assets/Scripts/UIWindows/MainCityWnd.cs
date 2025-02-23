@@ -109,6 +109,12 @@ public class MainCityWnd : WindowRoot
         menuAni.Play(clip.name);
     }
 
+    public void ClickHeadBtn()
+    {
+        audioSvc.PlayUIAudio(Constants.UIOpenPage);
+        MainCitySys.Instance.OpenInfoWnd();
+    }
+
     public void RegisterTouchEvts()
     {
         OnClickDown(imgTouch.gameObject, (PointerEventData evt) =>

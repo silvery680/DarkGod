@@ -13,7 +13,10 @@ public class MainCitySys : SystemRoot
     public static MainCitySys Instance = null;
 
     public MainCityWnd mainCityWnd;
+    public InfoWnd infoWnd;
+
     private PlayerController playerCtrl;
+    private Transform charCamTrans;
 
     public override void InitSys()
     {
@@ -38,6 +41,12 @@ public class MainCitySys : SystemRoot
 
             // 播放主城背景音乐
             audioSvc.PlayBGMusic(Constants.BGMainCity);
+
+            // 设置人物展示相机
+            if (charCamTrans != null)
+            {
+                charCamTrans.gameObject.SetActive(false);
+            }
         });
     }
 
@@ -71,5 +80,50 @@ public class MainCitySys : SystemRoot
         }
 
         playerCtrl.Dir = dir;
+    }
+
+    public void OpenInfoWnd()
+    {
+        if (charCamTrans == null)
+        {
+            charCamTrans = GameObject.FindGameObjectWithTag("CharShowCam").transform;
+        }
+
+        // 设置人物展示相机相对位置
+        charCamTrans.localPosition = playerCtrl.transform.position + playerCtrl.transform.forward * 2.8f + new Vector3(0, 1.2f, 0);
+        charCamTrans.localEulerAngles = new Vector3(0, 180 + playerCtrl.transform.localEulerAngles.y, 0);
+        charCamTrans.localScale = Vector3.one;
+        charCamTrans.gameObject.SetActive(true);
+        infoWnd.SetWndState();
+    }
+
+    /// <summary>
+    /// 关闭跟随相机
+    /// </summary>
+    public void CloseInfoWnd()
+    {
+        if (charCamTrans != null)
+        {
+            charCamTrans.gameObject.SetActive(false);
+            infoWnd.SetWndState(false);
+        }
+    }
+
+    private float startRote = 0;
+    /// <summary>
+    /// 记录初始旋转角度
+    /// </summary>
+    public void SetStartRoate()
+    {
+        startRote = playerCtrl.transform.localEulerAngles.y;
+    }
+
+    /// <summary>
+    /// 设置角色旋转
+    /// </summary>
+    /// <param name="rote">旋转角度</param>
+    public void SetPlayerRote(float rote)
+    {
+        playerCtrl.transform.localEulerAngles = new Vector3(0, startRote - rote, 0);
     }
 }

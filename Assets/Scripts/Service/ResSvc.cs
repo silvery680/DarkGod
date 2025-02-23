@@ -39,7 +39,7 @@ public class ResSvc : MonoBehaviour
 
             GameRoot.Instance.loadingWnd.SetProgress(smoothProgress);
 
-            Debug.Log(sceneAsync.progress);
+            // Debug.Log(sceneAsync.progress);
             if (sceneAsync.progress == 1f && smoothProgress >= 0.995f)
             {
                 if (loaded != null)

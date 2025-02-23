@@ -24,9 +24,10 @@ public class Constants
     public const string UILoginBtn = "uiLoginBtn";
     // 主城菜单展开音效
     public const string UIExtenBtn = "uiExtenBtn";
-
     // 常规UI点击音效
     public const string UIClickBtn = "uiClickBtn";
+    // 窗口打开音效
+    public const string UIOpenPage = "uiOpenPage";
 
     // 屏幕标准宽高比
     public const int ScreenStandardWidth = 1334;
