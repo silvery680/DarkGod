@@ -29,27 +29,23 @@ public class ResSvc : MonoBehaviour
     public void AsyncLoadScene(string sceneName, Action loaded)
     {
         GameRoot.SetLoadingWndState();
-        AsyncOperation sceneAsync =  SceneManager.LoadSceneAsync(sceneName);
-        sceneAsync.allowSceneActivation = false;
+        AsyncOperation sceneAsync = SceneManager.LoadSceneAsync(sceneName);
 
         float lastProgress = 0f;  // 上一帧的进度
         prgCB = () =>
         {
-            float targetProgress = sceneAsync.progress / 0.9f;  // Unity的异步加载进度最大值是0.9，接近完成时会变慢
-            float smoothProgress = Mathf.Lerp(lastProgress, targetProgress, 1f * Time.deltaTime);  // 使用Lerp实现更慢的过渡，每秒最多20%进度
-
-            // TOREMOVE 测试用，直接跳过加载
-            smoothProgress = targetProgress;
+            float targetProgress = sceneAsync.progress;
+            float smoothProgress = Mathf.Lerp(lastProgress, targetProgress, 1f * Time.deltaTime);
 
             GameRoot.Instance.loadingWnd.SetProgress(smoothProgress);
 
-            if (smoothProgress >= 0.99)
+            Debug.Log(sceneAsync.progress);
+            if (sceneAsync.progress == 1f && smoothProgress >= 0.995f)
             {
                 if (loaded != null)
                 {
                     loaded();
                 }
-                sceneAsync.allowSceneActivation = true;
                 sceneAsync = null;
                 prgCB = null;
                 GameRoot.SetLoadingWndState(false);
@@ -82,11 +78,32 @@ public class ResSvc : MonoBehaviour
         return au;
     }
 
+    private Dictionary<string, GameObject> goDic = new Dictionary<string, GameObject>();
+    public GameObject LoadPrefab(string path, bool cache = false)
+    {
+        GameObject prefab = null;
+        if (!goDic.TryGetValue(path, out prefab))
+        {
+            prefab = Resources.Load<GameObject>(path);
+            if (cache)
+            {
+                goDic.Add(path, prefab);
+            }
+        }
+        GameObject go = null;
+        if (prefab != null)
+        {
+            go = Instantiate(prefab);
+        }
+        return go;
+    }
+
     #region InitCfgs
     private List<string> surnameList = new List<string>();
     private List<string> manList = new List<string>();
     private List<string> womanList = new List<string>();
 
+    #region 随机名字
     private void InitRDNameCfg(string path)
     {
         TextAsset xml = Resources.Load<TextAsset>(path);
@@ -207,7 +224,7 @@ public class ResSvc : MonoBehaviour
                         case "playerBornRote":
                             {
                                 string[] valArr = e.InnerText.Split(',');
-                                mc.playerBornPos = new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
+                                mc.playerBornRote = new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
                             }
                             break;
                     }
@@ -217,5 +234,17 @@ public class ResSvc : MonoBehaviour
             }
         }
     }
+
+    public MapCfg GetMapCfgData(int id)
+    {
+        MapCfg data = null;
+        if (mapCfgDataDic.TryGetValue(id, out data))
+        {
+            return data;
+        }
+        return null;
+    }
+    #endregion
+
     #endregion
 }

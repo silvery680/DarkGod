@@ -44,8 +44,6 @@ public class MainCityWnd : WindowRoot
 
         pointDis = Constants.ScreenOPDis * PETools.GetGlobalRate();
 
-        Debug.Log("pointDis:" + pointDis + " GlobalRate:" + PETools.GetGlobalRate());
-
         defaultPos = imgDirBg.transform.position;
         SetActive(imgDirPoint, false);
         RegisterTouchEvts();
@@ -71,7 +69,6 @@ public class MainCityWnd : WindowRoot
 
         float screenWidth = Screen.width / PETools.GetGlobalRate();
         float width = (screenWidth - 180) / 10;
-        Debug.Log(screenWidth);
 
         grid.cellSize = new Vector2(width, 7);
 
