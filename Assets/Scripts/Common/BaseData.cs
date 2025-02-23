@@ -7,6 +7,15 @@
 
 using UnityEngine;
 
+public class AutoGuideCfg : BaseData<AutoGuideCfg>
+{
+    public int npcID; // 触发任务的NPC索引号
+    public string dialogArr; // 对话数组
+    public int actID; // 完成这个引导之后做什么
+    public int coin;
+    public int exp;
+}
+
 public class MapCfg : BaseData<MapCfg>
 {
     public string mapName;
@@ -15,7 +24,6 @@ public class MapCfg : BaseData<MapCfg>
     public Vector3 mainCamRote;
     public Vector3 playerBornPos;
     public Vector3 playerBornRote;
-
 }
 
 public class BaseData<T>

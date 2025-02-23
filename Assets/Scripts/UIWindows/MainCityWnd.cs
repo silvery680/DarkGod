@@ -14,6 +14,8 @@ using UnityEngine.UI;
 
 public class MainCityWnd : WindowRoot 
 {
+
+    #region UIDefine
     public Image imgTouch;
     public Image imgDirBg;
     public Image imgDirPoint;
@@ -28,12 +30,16 @@ public class MainCityWnd : WindowRoot
     public Text txtName;
     public Text txtExpPrg;
 
-    public Transform expPrgTrans;
+    public Transform expPrgTrans; 
+    #endregion
 
     private bool menuState = true;
     private float pointDis;
     private Vector2 startPos = Vector2.zero;
     private Vector2 defaultPos = Vector2.zero;
+
+    private AutoGuideCfg curtTaskData;
+    public Button btnGuide;
 
 
 
@@ -59,6 +65,8 @@ public class MainCityWnd : WindowRoot
         SetText(txtLevel, pd.lv);
         SetText(txtName, pd.name);
 
+
+        #region EXP
         //express
         int expPrgVal = (int)(pd.exp * 1.0f / PECommon.GetExpUpValByLv(pd.lv) * 100);
         SetText(txtExpPrg, expPrgVal + "%");
@@ -72,7 +80,7 @@ public class MainCityWnd : WindowRoot
 
         grid.cellSize = new Vector2(width, 7);
 
-        for (int i = 0; i < expPrgTrans.childCount; i ++)
+        for (int i = 0; i < expPrgTrans.childCount; i++)
         {
             Image img = expPrgTrans.GetChild(i).GetComponent<Image>();
             if (i < index)
@@ -88,10 +96,59 @@ public class MainCityWnd : WindowRoot
                 img.fillAmount = 0;
             }
         }
+        #endregion
+
+        // 设置自动任务图标
+        curtTaskData = resSvc.GetAutoGuideData(pd.guideID);
+        if (curtTaskData != null)
+        {
+            SetGuideBtnIcon(curtTaskData.npcID);
+        }
+        else
+        {
+            SetGuideBtnIcon(-1);
+        }
     }
     #endregion
 
+    private void SetGuideBtnIcon(int npcID)
+    {
+        string spPath = "";
+        Image img = btnGuide.GetComponent<Image>();
+
+        switch(npcID)
+        {
+            case Constants.NPCWiseMan:
+                spPath = PathDefine.WiseManHead;
+                break;
+            case Constants.NPCGeneral:
+                spPath = PathDefine.GeneralHead;
+                break;
+            case Constants.NPCArtisan:
+                spPath = PathDefine.ArtisanHead;
+                break;
+            case Constants.NPCTrader:
+                spPath = PathDefine.TraderHead;
+                break;
+        }
+
+        SetSprite(img, spPath);
+    }
     #region ClickEvts
+    public void ClickGuideBtn()
+    {
+        audioSvc.PlayUIAudio(Constants.UIClickBtn);
+
+        if (curtTaskData != null)
+        {
+            MainCitySys.Instance.RunTask(curtTaskData);
+        }
+        else
+        {
+            GameRoot.AddTips("更多引导任务，正在开发中...");
+        }
+    }
+
     public void ClickMenuBtn()
     {
         audioSvc.PlayUIAudio(Constants.UIExtenBtn);

@@ -95,6 +95,11 @@ public abstract class WindowRoot : MonoBehaviour
         return t;
     }
 
+    protected void SetSprite(Image img, string path)
+    {
+        Sprite sp = resSvc.LoadSprite(path, true);
+        img.sprite = sp;
+    }
     #endregion
 
     #region Click Evts

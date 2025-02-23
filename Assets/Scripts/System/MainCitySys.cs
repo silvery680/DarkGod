@@ -7,8 +7,9 @@
 *****************************************************/
 
 using UnityEngine;
+using UnityEngine.AI;
 
-public class MainCitySys : SystemRoot 
+public class MainCitySys : SystemRoot
 {
     public static MainCitySys Instance = null;
 
@@ -17,6 +18,9 @@ public class MainCitySys : SystemRoot
 
     private PlayerController playerCtrl;
     private Transform charCamTrans;
+    private AutoGuideCfg curtTaskData;
+    private Transform[] npcPosTrans;
+    private NavMeshAgent nav;
 
     public override void InitSys()
     {
@@ -26,6 +30,9 @@ public class MainCitySys : SystemRoot
         PECommon.Log("Init MainCitySystem");
     }
 
+    /// <summary>
+    /// 进入主城
+    /// </summary>
     public void EnterMainCity()
     {
         MapCfg mapData = resSvc.GetMapCfgData(Constants.MainCityMapID);
@@ -42,6 +49,10 @@ public class MainCitySys : SystemRoot
             // 播放主城背景音乐
             audioSvc.PlayBGMusic(Constants.BGMainCity);
 
+            GameObject map = GameObject.FindGameObjectWithTag("MapRoot");
+            MainCityMap mcm = map.GetComponent<MainCityMap>();
+            npcPosTrans = mcm.NpcPosTrans;
+
             // 设置人物展示相机
             if (charCamTrans != null)
             {
@@ -50,6 +61,10 @@ public class MainCitySys : SystemRoot
         });
     }
 
+    /// <summary>
+    /// 加载人物和主摄像机位置信息
+    /// </summary>
+    /// <param name="mapData">地图配置信息</param>
     private void LoadPlayer(MapCfg mapData)
     {
         GameObject player = resSvc.LoadPrefab(PathDefine.AssissnCityPlayerPrefab, true);
@@ -66,10 +81,17 @@ public class MainCitySys : SystemRoot
 
         playerCtrl = player.GetComponent<PlayerController>();
         playerCtrl.Init();
+        nav = player.GetComponent<NavMeshAgent>();
     }
 
+    /// <summary>
+    /// 设置人物移动方向
+    /// </summary>
+    /// <param name="dir"></param>
     public void SetMoveDir(Vector2 dir)
     {
+        StopNavTask();
+
         if (dir == Vector2.zero)
         {
             playerCtrl.SetBlend(Constants.BlendIdle);
@@ -82,8 +104,14 @@ public class MainCitySys : SystemRoot
         playerCtrl.Dir = dir;
     }
 
+    #region InfoWnd
+    /// <summary>
+    /// 打开个人信息页
+    /// </summary>
     public void OpenInfoWnd()
     {
+        StopNavTask();
+
         if (charCamTrans == null)
         {
             charCamTrans = GameObject.FindGameObjectWithTag("CharShowCam").transform;
@@ -126,4 +154,82 @@ public class MainCitySys : SystemRoot
     {
         playerCtrl.transform.localEulerAngles = new Vector3(0, startRote - rote, 0);
     }
+    #endregion
+
+    #region Nav
+    private bool isNavGuide = false;
+    /// <summary>
+    /// 执行引导任务
+    /// </summary>
+    /// <param name="agc">任务数据</param>
+    public void RunTask(AutoGuideCfg agc)
+    {
+        if (agc != null)
+        {
+            curtTaskData = agc;
+        }
+
+        // 解析任务数据
+        nav.enabled = true;
+        if (curtTaskData.npcID != -1)
+        {
+            isNavGuide = true;
+            nav.enabled = true;
+            nav.speed = Constants.PlayerMoveSpeed;
+            nav.SetDestination(npcPosTrans[agc.npcID].position);
+            playerCtrl.SetBlend(Constants.BlendWalk);
+        }
+        else
+        {
+            OpenGuideWnd();
+        }
+    }
+
+    /// <summary>
+    /// 检查是否到达导航点
+    /// </summary>
+    private void IsArriveNavPos()
+    {
+        float dis = Vector3.Distance(playerCtrl.transform.position, npcPosTrans[curtTaskData.npcID].position);
+
+        if (dis < 0.5f)
+        {
+            StopNavTask();
+            OpenGuideWnd();
+        }
+    }
+
+    private void Update()
+    {
+        // 导航状态下相机跟随
+        if (isNavGuide)
+        {
+            IsArriveNavPos();
+            playerCtrl.SetCam();
+        }
+    }
+
+    /// <summary>
+    /// 停止导航操作
+    /// </summary>
+    private void StopNavTask()
+    {
+        if (isNavGuide)
+        {
+            isNavGuide = false;
+
+            nav.isStopped = true;
+            nav.enabled = false;
+            playerCtrl.SetBlend(Constants.BlendIdle);
+        }
+    }
+
+    /// <summary>
+    /// 打开引导界面
+    /// </summary>
+    private void OpenGuideWnd()
+    {
+        // TODO
+    } 
+    #endregion
 }

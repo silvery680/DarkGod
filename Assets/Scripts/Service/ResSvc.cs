@@ -21,6 +21,7 @@ public class ResSvc : MonoBehaviour
         Instance = this;
         InitRDNameCfg(PathDefine.RDNameCfg);
         InitMapCfg(PathDefine.MapCfg);
+        InitGuideCfg(PathDefine.GuideCfg);
 
         PECommon.Log("Init ResSvc...");
     }
@@ -98,12 +99,27 @@ public class ResSvc : MonoBehaviour
         return go;
     }
 
+    private Dictionary<string, Sprite> spDic = new Dictionary<string, Sprite>();
+    public Sprite LoadSprite(string path, bool cache = false)
+    {
+        Sprite sp = null;
+        if (!spDic.TryGetValue(path, out sp))
+        {
+            sp = Resources.Load<Sprite>(path);
+            if (cache)
+            {
+                spDic.Add(path, sp);
+            }
+        }
+        return sp;
+    }
+
     #region InitCfgs
+    #region 随机名字
     private List<string> surnameList = new List<string>();
     private List<string> manList = new List<string>();
     private List<string> womanList = new List<string>();
 
-    #region 随机名字
     private void InitRDNameCfg(string path)
     {
         TextAsset xml = Resources.Load<TextAsset>(path);
@@ -239,6 +255,83 @@ public class ResSvc : MonoBehaviour
     {
         MapCfg data = null;
         if (mapCfgDataDic.TryGetValue(id, out data))
+        {
+            return data;
+        }
+        return null;
+    }
+    #endregion
+
+    #region 自动引导配置
+    private Dictionary<int, AutoGuideCfg> autoGuideCfgDataDic = new Dictionary<int, AutoGuideCfg>();
+    private void InitGuideCfg(string path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(path);
+        if (!xml)
+        {
+            PECommon.Log("xml File:" + path + " not exist", LogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);
+
+            XmlNodeList nodeList = doc.SelectSingleNode("root").ChildNodes;
+
+            foreach (XmlElement ele in nodeList)
+            {
+                if (ele.GetAttributeNode("ID") == null)
+                {
+                    continue;
+                }
+
+                int _ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+                AutoGuideCfg agc = new AutoGuideCfg()
+                {
+                    ID = _ID
+                };
+
+
+                foreach (XmlElement e in ele.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "npcID":
+                            {
+                                agc.npcID = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "dilogArr":
+                            {
+                                agc.dialogArr = e.InnerText;
+                            }
+                            break;
+                        case "actID":
+                            {
+                                agc.actID = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "coin":
+                            {
+                                agc.coin = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "exp":
+                            {
+                                agc.exp = int.Parse(e.InnerText);
+                            }
+                            break;
+                    }
+                }
+
+                autoGuideCfgDataDic.Add(_ID, agc);
+            }
+        }
+    }
+    public AutoGuideCfg GetAutoGuideData(int id)
+    {
+        AutoGuideCfg data = null;
+        if (autoGuideCfgDataDic.TryGetValue(id, out data))
         {
             return data;
         }
