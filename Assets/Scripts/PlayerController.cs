@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private float targetBlend;
     private float currentBlend;
 
-    private void Start()
+    public void Init()
     {
         camTrans = Camera.main.transform;
         camOffset = transform.position - camTrans.position;
@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        /*
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -64,6 +65,9 @@ public class PlayerController : MonoBehaviour
             Dir = Vector2.zero;
             SetBlend(Constants.BlendIdle);
         }
+        */
+
+
 
         if (currentBlend != targetBlend)
         {
@@ -83,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
     private void SetDir()
     {
-        float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1));
+        float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)) + camTrans.eulerAngles.y;
         Vector3 eulerAngles = new Vector3(0, angle, 0);
         transform.localEulerAngles = eulerAngles;
     }
@@ -101,7 +105,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SetBlend(float blend)
+    public void SetBlend(float blend)
     {
         targetBlend = blend;
     }

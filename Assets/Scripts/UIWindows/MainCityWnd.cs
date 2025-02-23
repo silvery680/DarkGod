@@ -124,7 +124,8 @@ public class MainCityWnd : WindowRoot
             SetActive(imgDirPoint, false);
             imgDirPoint.transform.localPosition = Vector2.zero;
 
-            //TODO 方向信息传递
+            // 方向信息传递
+            MainCitySys.Instance.SetMoveDir(Vector2.zero);
         });
 
         OnDrag(imgTouch.gameObject, (PointerEventData evt) =>
@@ -140,6 +141,8 @@ public class MainCityWnd : WindowRoot
             {
                 imgDirPoint.transform.position = evt.position;
             }
+            // 方向信息传递
+            MainCitySys.Instance.SetMoveDir(dir.normalized);
         });
     }
     #endregion

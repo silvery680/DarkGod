@@ -13,6 +13,7 @@ public class MainCitySys : SystemRoot
     public static MainCitySys Instance = null;
 
     public MainCityWnd mainCityWnd;
+    private PlayerController playerCtrl;
 
     public override void InitSys()
     {
@@ -53,5 +54,22 @@ public class MainCitySys : SystemRoot
         // 相机初始化
         Camera.main.transform.position = mapData.mainCamPos;
         Camera.main.transform.localEulerAngles = mapData.mainCamRote;
+
+        playerCtrl = player.GetComponent<PlayerController>();
+        playerCtrl.Init();
+    }
+
+    public void SetMoveDir(Vector2 dir)
+    {
+        if (dir == Vector2.zero)
+        {
+            playerCtrl.SetBlend(Constants.BlendIdle);
+        }
+        else
+        {
+            playerCtrl.SetBlend(Constants.BlendWalk);
+        }
+
+        playerCtrl.Dir = dir;
     }
 }
