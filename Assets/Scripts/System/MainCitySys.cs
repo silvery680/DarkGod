@@ -15,6 +15,7 @@ public class MainCitySys : SystemRoot
 
     public MainCityWnd mainCityWnd;
     public InfoWnd infoWnd;
+    public GuideWnd guideWnd;
 
     private PlayerController playerCtrl;
     private Transform charCamTrans;
@@ -229,7 +230,12 @@ public class MainCitySys : SystemRoot
     /// </summary>
     private void OpenGuideWnd()
     {
-        // TODO
+        guideWnd.SetWndState();
     } 
+
+    public AutoGuideCfg GetCurtTaskData()
+    {
+        return curtTaskData;
+    }
     #endregion
 }

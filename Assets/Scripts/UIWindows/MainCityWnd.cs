@@ -118,16 +118,16 @@ public class MainCityWnd : WindowRoot
 
         switch(npcID)
         {
-            case Constants.NPCWiseMan:
+            case Constants.NPCWiseManID:
                 spPath = PathDefine.WiseManHead;
                 break;
-            case Constants.NPCGeneral:
+            case Constants.NPCGeneralID:
                 spPath = PathDefine.GeneralHead;
                 break;
-            case Constants.NPCArtisan:
+            case Constants.NPCArtisanID:
                 spPath = PathDefine.ArtisanHead;
                 break;
-            case Constants.NPCTrader:
+            case Constants.NPCTraderID:
                 spPath = PathDefine.TraderHead;
                 break;
         }

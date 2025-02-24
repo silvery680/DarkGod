@@ -9,10 +9,16 @@
 public class Constants 
 {
     // AutoGuideNPC
-    public const int NPCWiseMan = 0;
-    public const int NPCGeneral = 1;
-    public const int NPCArtisan = 2;
-    public const int NPCTrader = 3;
+    public const int NPCWiseManID = 0;
+    public const int NPCGeneralID = 1;
+    public const int NPCArtisanID = 2;
+    public const int NPCTraderID = 3;
+
+    public const string NPCWiseManName = "智者";
+    public const string NPCGeneralName = "将军";
+    public const string NPCArtisanName = "工匠";
+    public const string NPCTraderName = "商人";
+    public const string NPCGuideName = "小芸";
 
     // 场景名称/ID
     public const string SceneLogin = "SceneLogin";

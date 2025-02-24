@@ -1169,9 +1169,30 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114587987707830528, guid: b7af59321fe62934dab26eef93f2bc96,
+        type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 224195842148479632, guid: b7af59321fe62934dab26eef93f2bc96,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 6.0000153
+      objectReference: {fileID: 0}
+    - target: {fileID: 224195842148479632, guid: b7af59321fe62934dab26eef93f2bc96,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -1012
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b7af59321fe62934dab26eef93f2bc96, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1508427218 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114395560092136128, guid: b7af59321fe62934dab26eef93f2bc96,
+    type: 2}
+  m_PrefabInternal: {fileID: 1508427216}
+  m_Script: {fileID: 11500000, guid: 7fd30a2ecf47acf44aac80ba48d56d5e, type: 3}
 --- !u!1001 &1542974090
 Prefab:
   m_ObjectHideFlags: 0
@@ -1567,6 +1588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCityWnd: {fileID: 844873102}
   infoWnd: {fileID: 530397334}
+  guideWnd: {fileID: 1508427218}
 --- !u!81 &1970909463
 AudioListener:
   m_ObjectHideFlags: 0

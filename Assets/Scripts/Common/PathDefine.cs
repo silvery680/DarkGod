@@ -24,6 +24,13 @@ public class PathDefine
     public const string TraderHead = "ResImages/trader";
     #endregion
 
+    public const string SelfIcon = "ResImages/assassin";
+    public const string GuideIcon = "ResImages/npcguide";
+    public const string WiseManIcon = "ResImages/npc0";
+    public const string GeneralIcon = "ResImages/npc1";
+    public const string ArtisanIcon = "ResImages/npc2";
+    public const string TraderIcon = "ResImages/npc3";
+
     #region Player
     public const string AssissnCityPlayerPrefab = "PrefabPlayer/AssassinCity";
     #endregion
