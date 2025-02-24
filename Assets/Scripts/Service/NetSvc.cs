@@ -90,15 +90,19 @@ public class NetSvc : MonoBehaviour
         {
             switch ((ErrorCode)msg.err)
             {
+                case ErrorCode.SeverDataError:
+                    GameRoot.AddTips("客户端数据异常");
+                    PECommon.Log("客户端与服务端数据不一致", LogType.Error);
+                    break;
+                case ErrorCode.UpdateDBError:
+                    GameRoot.AddTips("网络不稳定");
+                    PECommon.Log("数据库更新错误", LogType.Error);
+                    break;
                 case ErrorCode.AcctIsOnline:
                     GameRoot.AddTips("当前账号已经上线");
                     break;
                 case ErrorCode.WrongPass:
                     GameRoot.AddTips("密码错误");
-                    break;
-                case ErrorCode.UpdateDBError:
-                    GameRoot.AddTips("网络不稳定");
-                    PECommon.Log("数据库更新错误", LogType.Error);
                     break;
             };
             return;
@@ -111,6 +115,9 @@ public class NetSvc : MonoBehaviour
                 break;
             case CMD.RspRename:
                 LoginSys.Instance.RspRename(msg);
+                break;
+            case CMD.RspGuide:
+                MainCitySys.Instance.RspGuide(msg);
                 break;
 
         }

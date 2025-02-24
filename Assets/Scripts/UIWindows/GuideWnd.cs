@@ -100,7 +100,16 @@ public class GuideWnd : WindowRoot
         if (dialogInd == dialogArr.Length)
         {
             // TODO 发送任务引导完成任务
+            GameMsg msg = new GameMsg
+            {
+                cmd = (int)CMD.ReqGuide,
+                reqGuide = new ReqGuide
+                {
+                    guideid = curTaskData.ID,
+                }
+            };
 
+            netSvc.SendMsg(msg);
             SetWndState(false);
         }
         else

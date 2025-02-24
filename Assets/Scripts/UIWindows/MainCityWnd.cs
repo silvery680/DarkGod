@@ -56,7 +56,7 @@ public class MainCityWnd : WindowRoot
         RefreshUI();
     }
 
-    private void RefreshUI()
+    public void RefreshUI()
     {
         PlayerData pd = GameRoot.Instance.PlayerData;
         SetText(txtFight, PECommon.GetFightByProps(pd));
@@ -129,6 +129,9 @@ public class MainCityWnd : WindowRoot
                 break;
             case Constants.NPCTraderID:
                 spPath = PathDefine.TraderHead;
+                break;
+            default:
+                spPath = PathDefine.TaskHead;
                 break;
         }
 

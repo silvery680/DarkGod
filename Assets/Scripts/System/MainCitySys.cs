@@ -6,6 +6,7 @@
 	Description ：主城业务系统
 *****************************************************/
 
+using PEProtocol;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -233,9 +234,48 @@ public class MainCitySys : SystemRoot
         guideWnd.SetWndState();
     } 
 
+    /// <summary>
+    /// 获得当前任务的数据
+    /// </summary>
+    /// <returns></returns>
     public AutoGuideCfg GetCurtTaskData()
     {
         return curtTaskData;
+    }
+
+    /// <summary>
+    /// 收到服务器的任务引导回应请求
+    /// </summary>
+    /// <param name="msg">数据包</param>
+    public void RspGuide(GameMsg msg)
+    {
+        RspGuide data = msg.rspGuide;
+
+        GameRoot.AddTips(Constants.Color("任务奖励 金币 +" + curtTaskData.coin + " 经验 +" + curtTaskData.exp, TxtColor.Blue));
+
+        switch(curtTaskData.actID)
+        {
+            case 0:
+                // 与智者对话
+                break;
+            case 1:
+                // 进入副本
+                break;
+            case 2:
+                // 进入强化界面
+                break;
+            case 3:
+                // 进入体力购买
+                break;
+            case 4:
+                // 进入金币铸造
+                break;
+            case 5:
+                // 进入世界聊天
+                break;
+        }
+        GameRoot.Instance.SetPlayerDataByGuide(data);
+        mainCityWnd.RefreshUI();
     }
     #endregion
 }
