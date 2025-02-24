@@ -39,9 +39,8 @@ public class MainCityWnd : WindowRoot
     private Vector2 defaultPos = Vector2.zero;
 
     private AutoGuideCfg curtTaskData;
+
     public Button btnGuide;
-
-
 
     #region Main Function
     protected override void InitWnd()
@@ -109,14 +108,13 @@ public class MainCityWnd : WindowRoot
             SetGuideBtnIcon(-1);
         }
     }
-    #endregion
 
     private void SetGuideBtnIcon(int npcID)
     {
         string spPath = "";
         Image img = btnGuide.GetComponent<Image>();
 
-        switch(npcID)
+        switch (npcID)
         {
             case Constants.NPCWiseManID:
                 spPath = PathDefine.WiseManHead;
@@ -137,7 +135,16 @@ public class MainCityWnd : WindowRoot
 
         SetSprite(img, spPath);
     }
+    #endregion
+
+
     #region ClickEvts
+    public void ClickStrongBtn()
+    {
+        audioSvc.PlayUIAudio(Constants.UIOpenPage);
+        MainCitySys.Instance.OpenStrongWnd();
+    }
+
     public void ClickGuideBtn()
     {
         audioSvc.PlayUIAudio(Constants.UIClickBtn);

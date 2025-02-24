@@ -22,6 +22,7 @@ public class ResSvc : MonoBehaviour
         InitRDNameCfg(PathDefine.RDNameCfg);
         InitMapCfg(PathDefine.MapCfg);
         InitGuideCfg(PathDefine.GuideCfg);
+        InitStrongCfg(PathDefine.StrongCfg);
 
         PECommon.Log("Init ResSvc...");
     }
@@ -37,6 +38,7 @@ public class ResSvc : MonoBehaviour
         {
             float targetProgress = sceneAsync.progress;
             float smoothProgress = Mathf.Lerp(lastProgress, targetProgress, 1f * Time.deltaTime);
+            smoothProgress = targetProgress;
 
             GameRoot.Instance.loadingWnd.SetProgress(smoothProgress);
 
@@ -115,7 +117,7 @@ public class ResSvc : MonoBehaviour
     }
 
     #region InitCfgs
-    #region 随机名字
+    #region 随机名字配置
     private List<string> surnameList = new List<string>();
     private List<string> manList = new List<string>();
     private List<string> womanList = new List<string>();
@@ -145,7 +147,7 @@ public class ResSvc : MonoBehaviour
 
                 foreach (XmlElement e in ele.ChildNodes)
                 {
-                    switch(e.Name)
+                    switch (e.Name)
                     {
                         case "surname":
                             surnameList.Add(e.InnerText);
@@ -179,7 +181,7 @@ public class ResSvc : MonoBehaviour
     }
     #endregion
 
-    #region 地图
+    #region 地图配置
     private Dictionary<int, MapCfg> mapCfgDataDic = new Dictionary<int, MapCfg>();
     private void InitMapCfg(string path)
     {
@@ -207,7 +209,7 @@ public class ResSvc : MonoBehaviour
                 {
                     ID = _ID
                 };
-                
+
 
                 foreach (XmlElement e in ele.ChildNodes)
                 {
@@ -336,6 +338,144 @@ public class ResSvc : MonoBehaviour
             return data;
         }
         return null;
+    }
+    #endregion
+
+    #region 强化配置
+    // 位置 + 星级
+    private Dictionary<int, Dictionary<int, StrongCfg>> strongDataDic = new Dictionary<int, Dictionary<int, StrongCfg>>();
+    private void InitStrongCfg(string path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(path);
+        if (!xml)
+        {
+            PECommon.Log("xml File:" + path + " not exist", LogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);
+
+            XmlNodeList nodeList = doc.SelectSingleNode("root").ChildNodes;
+
+            foreach (XmlElement ele in nodeList)
+            {
+                if (ele.GetAttributeNode("ID") == null)
+                {
+                    continue;
+                }
+
+                int _ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+                StrongCfg sc = new StrongCfg()
+                {
+                    ID = _ID
+                };
+
+
+                foreach (XmlElement e in ele.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "pos":
+                            {
+                                sc.pos = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "starlv":
+                            {
+                                sc.starLv = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "addhp":
+                            {
+                                sc.addHp = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "addhurt":
+                            {
+                                sc.addHurt = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "adddef":
+                            {
+                                sc.addDef = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "minlv":
+                            {
+                                sc.minLv = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "coin":
+                            {
+                                sc.coin = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "crystal":
+                            {
+                                sc.crystal = int.Parse(e.InnerText);
+                            }
+                            break;
+                    }
+                }
+
+                Dictionary<int, StrongCfg> dic = null;
+                if (strongDataDic.TryGetValue(sc.pos, out dic))
+                {
+                    dic.Add(sc.starLv, sc);
+                }
+                else
+                {
+                    dic = new Dictionary<int, StrongCfg>();
+                    dic.Add(sc.starLv, sc);
+
+                    strongDataDic.Add(sc.pos, dic);
+                }
+            }
+
+        }
+    }
+    public StrongCfg GetStrongData(int id, int starLv)
+    {
+        StrongCfg sc = null;
+        Dictionary<int, StrongCfg> dic = null;
+        if (strongDataDic.TryGetValue(id, out dic))
+        {
+            if (dic.ContainsKey(starLv))
+            {
+                sc = dic[starLv];
+            }
+        }
+        return sc;
+    }
+
+    public int GetPropAddValPreLv(int pos, int starlv, int type)
+    {
+        Dictionary<int, StrongCfg> posDic = null;
+        int val = 0;
+        if (strongDataDic.TryGetValue(pos, out posDic))
+        {
+            for (int i = 0; i < starlv; i ++)
+            {
+                StrongCfg sc;
+                if (posDic.TryGetValue(i, out sc))
+                {
+                    switch(type)
+                    {
+                        case 1://hp
+                            val += sc.addHp;
+                            break;
+                        case 2://hurt
+                            val += sc.addHurt;
+                            break;
+                        case 3://def
+                            val += sc.addDef;
+                            break;
+                    }
+                }
+            }
+        }
+        return val;
     }
     #endregion
 

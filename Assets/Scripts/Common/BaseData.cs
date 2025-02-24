@@ -7,6 +7,18 @@
 
 using UnityEngine;
 
+public class StrongCfg : BaseData<StrongCfg>
+{
+    public int pos;
+    public int starLv;
+    public int addHp;
+    public int addHurt;
+    public int addDef;
+    public int minLv;
+    public int coin;
+    public int crystal;
+}
+
 public class AutoGuideCfg : BaseData<AutoGuideCfg>
 {
     public int npcID; // 触发任务的NPC索引号

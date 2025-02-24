@@ -16,6 +16,7 @@ public enum TxtColor
 
 public class Constants 
 {
+    // 不能加空格
     private const string ColorRed = "<color=#FF0000FF>";
     private const string ColorGreen = "<color=#00FF00FF>";
     private const string ColorBlue = "<color=#00B4FFFF>";

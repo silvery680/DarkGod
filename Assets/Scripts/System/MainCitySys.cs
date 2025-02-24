@@ -17,6 +17,7 @@ public class MainCitySys : SystemRoot
     public MainCityWnd mainCityWnd;
     public InfoWnd infoWnd;
     public GuideWnd guideWnd;
+    public StrongWnd strongWnd;
 
     private PlayerController playerCtrl;
     private Transform charCamTrans;
@@ -105,6 +106,14 @@ public class MainCitySys : SystemRoot
 
         playerCtrl.Dir = dir;
     }
+
+    #region StrongWnd
+    public void OpenStrongWnd()
+    {
+        strongWnd.SetWndState();
+    }
+
+    #endregion
 
     #region InfoWnd
     /// <summary>
