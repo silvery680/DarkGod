@@ -6,6 +6,7 @@
 	Description ：主城业务系统
 *****************************************************/
 
+using System;
 using PEProtocol;
 using UnityEngine;
 using UnityEngine.AI;
@@ -112,7 +113,15 @@ public class MainCitySys : SystemRoot
     {
         strongWnd.SetWndState();
     }
-
+    public void RspStrong(GameMsg msg)
+    {
+        int preFight = PECommon.GetFightByProps(GameRoot.Instance.PlayerData);
+        RspStrong data = msg.rspStrong;
+        GameRoot.Instance.SetPlayerDataByStrong(data);
+        int curtFight = PECommon.GetFightByProps(GameRoot.Instance.PlayerData);
+        GameRoot.AddTips(Constants.Color("战力提升 +" + (curtFight - preFight), TxtColor.Blue));
+        strongWnd.RefreshItem();
+    }
     #endregion
 
     #region InfoWnd
@@ -287,4 +296,6 @@ public class MainCitySys : SystemRoot
         mainCityWnd.RefreshUI();
     }
     #endregion
+
+    
 }

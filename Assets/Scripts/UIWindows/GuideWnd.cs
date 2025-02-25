@@ -87,11 +87,6 @@ public class GuideWnd : WindowRoot
         SetText(txtContent, talkArr[1].Replace("$name", pd.name));
     }
 
-    private void RefreshUI()
-    {
-
-    }
-
     public void ClickNextBtn()
     {
         audioSvc.PlayUIAudio(Constants.UIClickBtn);

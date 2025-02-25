@@ -455,9 +455,9 @@ public class ResSvc : MonoBehaviour
         int val = 0;
         if (strongDataDic.TryGetValue(pos, out posDic))
         {
-            for (int i = 0; i < starlv; i ++)
+            for (int i = 1; i <= starlv; i ++)
             {
-                StrongCfg sc;
+                StrongCfg sc = null;
                 if (posDic.TryGetValue(i, out sc))
                 {
                     switch(type)

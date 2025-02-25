@@ -38,6 +38,7 @@ public class StrongWnd : WindowRoot
     private Image[] imgs = new Image[6];
     private int currentIndex;
     private PlayerData pd;
+    private StrongCfg nextSc;
 
 
     protected override void InitWnd()
@@ -46,6 +47,8 @@ public class StrongWnd : WindowRoot
 
         pd = GameRoot.Instance.PlayerData;
         RegClickEvts();
+        
+        ClickPosItem(0);
         RefreshItem();
     }
 
@@ -94,7 +97,7 @@ public class StrongWnd : WindowRoot
         RefreshItem();
     }
 
-    private void RefreshItem()
+    public void RefreshItem()
     {
         switch(currentIndex)
         {
@@ -141,7 +144,7 @@ public class StrongWnd : WindowRoot
         SetText(propDef1, "防御 " + sumAddDef);
 
         int nextStartLv = curtStartLv + 1;
-        StrongCfg nextSc = resSvc.GetStrongData(currentIndex, nextStartLv);
+        nextSc = resSvc.GetStrongData(currentIndex, nextStartLv);
         if (nextSc != null)
         {
             SetActive(costTransRoot);
@@ -176,5 +179,43 @@ public class StrongWnd : WindowRoot
         }
 
         SetText(txtCoin, pd.coin);
+    }
+
+    public void ClickStrongBtn()
+    {
+        audioSvc.PlayUIAudio(Constants.FBItemEnter);
+
+        if (pd.strongArr[currentIndex] < 10)
+        {
+            if (pd.lv < nextSc.minLv)
+            {
+                GameRoot.AddTips(Constants.Color("角色等级不足", TxtColor.Red));
+                return;
+            }
+            if (pd.coin < nextSc.coin)
+            {
+                GameRoot.AddTips(Constants.Color("金币不足", TxtColor.Red));
+                return;
+            }
+            if (pd.crystal < nextSc.crystal)
+            {
+                GameRoot.AddTips(Constants.Color("水晶不足", TxtColor.Red));
+                return;
+            }
+
+            GameMsg msg = new GameMsg
+            {
+                cmd = (int)CMD.ReqStrong,
+                reqStrong = new ReqStrong
+                {
+                    pos = currentIndex,
+                }
+            };
+            netSvc.SendMsg(msg);
+        }
+        else
+        {
+            GameRoot.AddTips("星级已经升满");
+        }
     }
 }

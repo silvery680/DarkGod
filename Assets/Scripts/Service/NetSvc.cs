@@ -11,14 +11,14 @@ using PEProtocol;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class NetSvc : MonoBehaviour 
+public class NetSvc : MonoBehaviour
 {
     public static NetSvc Instance = null;
 
     PENet.PESocket<ClientSession, GameMsg> client = null;
     private Queue<GameMsg> msgQue = new Queue<GameMsg>();
     private static readonly string obj = "lock";
-    
+
     public void InitSvc()
     {
         Instance = this;
@@ -66,7 +66,7 @@ public class NetSvc : MonoBehaviour
 
     public void AddNetMsg(GameMsg msg)
     {
-        lock(obj)
+        lock (obj)
         {
             msgQue.Enqueue(msg);
         }
@@ -76,7 +76,7 @@ public class NetSvc : MonoBehaviour
     {
         if (msgQue.Count > 0)
         {
-            lock(obj)
+            lock (obj)
             {
                 GameMsg msg = msgQue.Dequeue();
                 HandOnMsg(msg);
@@ -90,6 +90,18 @@ public class NetSvc : MonoBehaviour
         {
             switch ((ErrorCode)msg.err)
             {
+                case ErrorCode.LackLevel:
+                    GameRoot.AddTips("客户端等级数据异常");
+                    PECommon.Log("客户端与服务端数据不一致", LogType.Error);
+                    break;
+                case ErrorCode.LackCoin:
+                    GameRoot.AddTips("客户端金币数据异常");
+                    PECommon.Log("客户端与服务端数据不一致", LogType.Error);
+                    break;
+                case ErrorCode.LackCrystal:
+                    GameRoot.AddTips("客户端水晶数据异常");
+                    PECommon.Log("客户端与服务端数据不一致", LogType.Error);
+                    break;
                 case ErrorCode.SeverDataError:
                     GameRoot.AddTips("客户端数据异常");
                     PECommon.Log("客户端与服务端数据不一致", LogType.Error);
@@ -118,6 +130,9 @@ public class NetSvc : MonoBehaviour
                 break;
             case CMD.RspGuide:
                 MainCitySys.Instance.RspGuide(msg);
+                break;
+            case CMD.RspStrong:
+                MainCitySys.Instance.RspStrong(msg);
                 break;
 
         }

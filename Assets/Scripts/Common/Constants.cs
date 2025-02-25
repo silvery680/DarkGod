@@ -77,6 +77,9 @@ public class Constants
     // 窗口打开音效
     public const string UIOpenPage = "uiOpenPage";
 
+    // 副本音效
+    public const string FBItemEnter = "fbitem";
+
     // 屏幕标准宽高比
     public const int ScreenStandardWidth = 1334;
     public const int ScreenStandardHeight = 750;
