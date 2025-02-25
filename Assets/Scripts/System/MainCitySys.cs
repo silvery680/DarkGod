@@ -319,8 +319,9 @@ public class MainCitySys : SystemRoot
     #endregion
 
     #region Buy
-    public void OpenBuyWnd()
+    public void OpenBuyWnd(BuyType type)
     {
+        buyWnd.SetBuyType(type);
         buyWnd.SetWndState();
     }
     #endregion

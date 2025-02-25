@@ -14,7 +14,7 @@ public enum TxtColor
     Yellow,
 }
 
-public class Constants 
+public class Constants
 {
     // 不能加空格
     private const string ColorRed = "<color=#FF0000FF>";

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222186493762069308}
   - component: {fileID: 114699492630308240}
   m_Layer: 0
-  m_Name: txtBuy
+  m_Name: txtInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fa4cdfffa6ac748b4af049d1d095c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  txtInfo: {fileID: 114699492630308240}
 --- !u!114 &114699492630308240
 MonoBehaviour:
   m_ObjectHideFlags: 1

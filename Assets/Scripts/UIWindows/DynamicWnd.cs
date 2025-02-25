@@ -19,6 +19,7 @@ public class DynamicWnd : WindowRoot
 
     private bool isTipsShow = false;
     private Queue<string> tipsQue = new Queue<string>();
+    private string preTips = "";
 
     protected override void InitWnd()
     {
@@ -32,7 +33,11 @@ public class DynamicWnd : WindowRoot
         // 防止多个线程同时访问
         lock (tipsQue)
         {
-            tipsQue.Enqueue(tips);
+            if (tipsQue.Count == 0 || !String.Equals(tips, preTips))
+            {
+                preTips = tips;
+                tipsQue.Enqueue(tips);
+            }
         }
     }
 
