@@ -17,16 +17,21 @@ public class PathDefine
     public const string StrongCfg = "ResCfgs/strong";
     #endregion
 
-    #region Strong
-    public const string ItemArrorBG = "ResImages/btnstrong";
-    public const string ItemPlatBG = "ResImages/charbg3";
+    #region Chat
+    public const string SelectedChatBtn = "ResImages/btntype1";
+    public const string UnselectedChatBtn = "ResImages/btntype2";
+    #endregion
 
-    public const string ItemToukui = "ResImages/toukui";
-    public const string ItemBody = "ResImages/body";
-    public const string ItemYaobu = "ResImages/yaobu";
-    public const string ItemHand = "ResImages/hand";
-    public const string ItemLeg = "ResImages/leg";
-    public const string ItemFoot = "ResImages/foot";
+    #region Strong
+    public const string ArrorBGItem = "ResImages/btnstrong";
+    public const string PlatBGItem = "ResImages/charbg3";
+
+    public const string ToukuiItem = "ResImages/toukui";
+    public const string BodyItem = "ResImages/body";
+    public const string YaobuItem = "ResImages/yaobu";
+    public const string HandItem = "ResImages/hand";
+    public const string LegItem = "ResImages/leg";
+    public const string FootItem = "ResImages/foot";
 
     public const string SpStar1 = "ResImages/star1";
     public const string SpStar2 = "ResImages/star2";

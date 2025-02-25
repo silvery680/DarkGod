@@ -139,6 +139,18 @@ public class MainCityWnd : WindowRoot
 
 
     #region ClickEvts
+    public void ClikcBuyPowerBtn()
+    {
+        audioSvc.PlayUIAudio(Constants.UIOpenPage);
+        MainCitySys.Instance.OpenBuyWnd();
+    }
+
+    public void ClikcMKCoinBtn()
+    {
+        audioSvc.PlayUIAudio(Constants.UIOpenPage);
+        MainCitySys.Instance.OpenBuyWnd();
+    }
+
     public void ClickStrongBtn()
     {
         audioSvc.PlayUIAudio(Constants.UIOpenPage);
@@ -180,6 +192,12 @@ public class MainCityWnd : WindowRoot
     {
         audioSvc.PlayUIAudio(Constants.UIOpenPage);
         MainCitySys.Instance.OpenInfoWnd();
+    }
+
+    public void ClickChatBtn()
+    {
+        audioSvc.PlayUIAudio(Constants.UIOpenPage);
+        MainCitySys.Instance.OpenChatWnd();
     }
 
     public void RegisterTouchEvts()

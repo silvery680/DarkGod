@@ -2751,7 +2751,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114802091161816280}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114835485907366422}
+        m_MethodName: ClickStrongBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114505423718897672
@@ -3808,7 +3819,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5934\u90E8"
+  m_Text: "\u624B\u90E8"
 --- !u!222 &222004675878689262
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -4753,7 +4764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 98.75, y: -15.248}
+  m_AnchoredPosition: {x: 120, y: -15.248}
   m_SizeDelta: {x: 52.2, y: 53.504}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224341733378522884
@@ -4852,7 +4863,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 196, y: -20}
+  m_AnchoredPosition: {x: 217.25, y: -20}
   m_SizeDelta: {x: 125.3, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224364830127512504

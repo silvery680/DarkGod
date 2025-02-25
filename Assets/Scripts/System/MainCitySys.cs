@@ -19,12 +19,16 @@ public class MainCitySys : SystemRoot
     public InfoWnd infoWnd;
     public GuideWnd guideWnd;
     public StrongWnd strongWnd;
+    public ChatWnd chatWnd;
+    public BuyWnd buyWnd;
 
     private PlayerController playerCtrl;
     private Transform charCamTrans;
     private AutoGuideCfg curtTaskData;
     private Transform[] npcPosTrans;
     private NavMeshAgent nav;
+
+    #region MainFunction
 
     public override void InitSys()
     {
@@ -106,7 +110,8 @@ public class MainCitySys : SystemRoot
         }
 
         playerCtrl.Dir = dir;
-    }
+    } 
+    #endregion
 
     #region StrongWnd
     public void OpenStrongWnd()
@@ -174,6 +179,7 @@ public class MainCitySys : SystemRoot
     {
         playerCtrl.transform.localEulerAngles = new Vector3(0, startRote - rote, 0);
     }
+
     #endregion
 
     #region Nav
@@ -297,5 +303,25 @@ public class MainCitySys : SystemRoot
     }
     #endregion
 
-    
+    #region Chat
+    /// <summary>
+    /// 打开聊天界面
+    /// </summary>
+    public void OpenChatWnd()
+    {
+        chatWnd.SetWndState();
+    }
+
+    public void PshChat(GameMsg msg)
+    {
+        chatWnd.AddChatMsg(msg.pshChat.name, msg.pshChat.chat);
+    }
+    #endregion
+
+    #region Buy
+    public void OpenBuyWnd()
+    {
+        buyWnd.SetWndState();
+    }
+    #endregion
 }

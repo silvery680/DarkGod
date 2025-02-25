@@ -33,6 +33,11 @@ public abstract class WindowRoot : MonoBehaviour
         }
     }
 
+    protected bool GetWndState()
+    {
+        return gameObject.activeSelf;
+    }
+
     protected virtual void InitWnd()
     {
         resSvc = ResSvc.Instance;

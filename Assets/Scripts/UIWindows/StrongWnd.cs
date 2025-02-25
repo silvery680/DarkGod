@@ -83,13 +83,13 @@ public class StrongWnd : WindowRoot
             if (i == currentIndex)
             {
                 // 箭头显示
-                SetSprite(imgs[i], PathDefine.ItemArrorBG);
+                SetSprite(imgs[i], PathDefine.ArrorBGItem);
                 trans.localPosition = new Vector3(10.3f, trans.localPosition.y, 0f);
                 trans.GetComponent<RectTransform>().sizeDelta = new Vector2(330f, 90f);
             }
             else
             {
-                SetSprite(imgs[i], PathDefine.ItemPlatBG);
+                SetSprite(imgs[i], PathDefine.PlatBGItem);
                 trans.localPosition = new Vector3(0f, trans.localPosition.y, 0f);
                 trans.GetComponent<RectTransform>().sizeDelta = new Vector2(300f, 70f);
             }
@@ -102,22 +102,22 @@ public class StrongWnd : WindowRoot
         switch(currentIndex)
         {
             case 0:
-                SetSprite(imgCurtPos, PathDefine.ItemToukui);
+                SetSprite(imgCurtPos, PathDefine.ToukuiItem);
                 break;
             case 1:
-                SetSprite(imgCurtPos, PathDefine.ItemBody);
+                SetSprite(imgCurtPos, PathDefine.BodyItem);
                 break;
             case 2:
-                SetSprite(imgCurtPos, PathDefine.ItemYaobu);
+                SetSprite(imgCurtPos, PathDefine.YaobuItem);
                 break;
             case 3:
-                SetSprite(imgCurtPos, PathDefine.ItemHand);
+                SetSprite(imgCurtPos, PathDefine.HandItem);
                 break;
             case 4:
-                SetSprite(imgCurtPos, PathDefine.ItemLeg);
+                SetSprite(imgCurtPos, PathDefine.LegItem);
                 break;
             case 5:
-                SetSprite(imgCurtPos, PathDefine.ItemFoot);
+                SetSprite(imgCurtPos, PathDefine.FootItem);
                 break;
         }
         SetText(txtStartLv, pd.strongArr[currentIndex] + "星级");
