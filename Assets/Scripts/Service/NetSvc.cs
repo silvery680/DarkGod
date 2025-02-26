@@ -90,17 +90,21 @@ public class NetSvc : MonoBehaviour
         {
             switch ((ErrorCode)msg.err)
             {
+                case ErrorCode.LackDiamond:
+                    GameRoot.AddTips("客户端水晶数据异常");
+                    PECommon.Log("客户端与服务端水晶数据不一致", LogType.Error);
+                    break;
                 case ErrorCode.LackLevel:
                     GameRoot.AddTips("客户端等级数据异常");
-                    PECommon.Log("客户端与服务端数据不一致", LogType.Error);
+                    PECommon.Log("客户端与服务端等级数据不一致", LogType.Error);
                     break;
                 case ErrorCode.LackCoin:
                     GameRoot.AddTips("客户端金币数据异常");
-                    PECommon.Log("客户端与服务端数据不一致", LogType.Error);
+                    PECommon.Log("客户端与服务端金币数据不一致", LogType.Error);
                     break;
                 case ErrorCode.LackCrystal:
                     GameRoot.AddTips("客户端水晶数据异常");
-                    PECommon.Log("客户端与服务端数据不一致", LogType.Error);
+                    PECommon.Log("客户端与服务端水晶数据不一致", LogType.Error);
                     break;
                 case ErrorCode.SeverDataError:
                     GameRoot.AddTips("客户端数据异常");
@@ -136,6 +140,9 @@ public class NetSvc : MonoBehaviour
                 break;
             case CMD.PshChat:
                 MainCitySys.Instance.PshChat(msg);
+                break;
+            case CMD.RspBuy:
+                MainCitySys.Instance.RspBuy(msg);
                 break;
 
         }

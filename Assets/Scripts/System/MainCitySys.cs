@@ -324,5 +324,16 @@ public class MainCitySys : SystemRoot
         buyWnd.SetBuyType(type);
         buyWnd.SetWndState();
     }
+
+    public void RspBuy(GameMsg msg)
+    {
+        RspBuy data = msg.rspBuy;
+        GameRoot.Instance.SetPlayerDataByBuy(data);
+        GameRoot.AddTips("购买成功");
+
+        mainCityWnd.RefreshUI();
+        buyWnd.SetWndState(false);
+    }
+
     #endregion
 }

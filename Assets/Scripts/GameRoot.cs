@@ -106,4 +106,11 @@ public class GameRoot : MonoBehaviour
         playerData.apdef = data.apdef;
         playerData.strongArr = data.strongArr;
     }
+
+    public void SetPlayerDataByBuy(RspBuy data)
+    {
+        playerData.diamond = data.dimond;
+        playerData.coin = data.coin;
+        playerData.power = data.power;
+    }
 }
