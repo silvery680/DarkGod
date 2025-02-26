@@ -47,12 +47,15 @@ public class GameRoot : MonoBehaviour
         res.InitSvc();
         AudioSvc audio = GetComponent<AudioSvc>();
         audio.InitSvc();
+        TimeSvc timer = GetComponent<TimeSvc>();
+        timer.InitSvc();
 
         // 业务系统初始化
         LoginSys login = GetComponent<LoginSys>();
         login.InitSys();
         MainCitySys mainCitySys = GetComponent<MainCitySys>();
         mainCitySys.InitSys();
+        
 
         // 进入到登录场景并且加载相应的UI
         login.EnterLogin();
@@ -111,6 +114,11 @@ public class GameRoot : MonoBehaviour
     {
         playerData.diamond = data.dimond;
         playerData.coin = data.coin;
+        playerData.power = data.power;
+    }
+
+    public void SetPlayerDataByPower(PshPower data)
+    {
         playerData.power = data.power;
     }
 }

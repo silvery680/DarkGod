@@ -23,12 +23,14 @@ public class ChatWnd : WindowRoot
     // 0-world 1-guild 2-friend
     private int chatType;
     private List<string> chatList = new List<string>();
+    private bool canSend = true;
 
     protected override void InitWnd()
     {
         base.InitWnd();
 
         chatType = 0;
+        iptChat.text = "";
         RefreshUI();
     }
 
@@ -78,6 +80,11 @@ public class ChatWnd : WindowRoot
 
     public void ClickSendBtn()
     {
+        if (!canSend)
+        {
+            GameRoot.AddTips("聊天消息每5秒才能发送一次");
+            return;
+        }
         if (iptChat.text != null && iptChat.text != "" && iptChat.text != " ")
         {
             if (iptChat.text.Length > 12)
@@ -97,9 +104,14 @@ public class ChatWnd : WindowRoot
                 };
                 iptChat.text = "";
                 netSvc.SendMsg(msg);
+                canSend = false;
+
+                timeSvc.AddTimeTask((int id) =>
+                {
+                    canSend = true;
+                }, 5f, PETimeUnit.Second);
             }
         }
-
     }
 
     public void ClickCloseBtn()

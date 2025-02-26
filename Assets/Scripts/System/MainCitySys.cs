@@ -336,4 +336,16 @@ public class MainCitySys : SystemRoot
     }
 
     #endregion
+
+    #region Power
+    public void PshPower(GameMsg msg)
+    {
+        PshPower data = msg.pshPower;
+        GameRoot.Instance.SetPlayerDataByPower(data);
+        if (mainCityWnd.GetWndState())
+        {
+            mainCityWnd.RefreshUI();
+        }
+    }
+    #endregion
 }

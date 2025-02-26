@@ -16,6 +16,7 @@ public abstract class WindowRoot : MonoBehaviour
     protected ResSvc resSvc = null;
     protected AudioSvc audioSvc = null;
     protected NetSvc netSvc = null;
+    protected TimeSvc timeSvc = null;
 
     public virtual void SetWndState(bool isActive = true)
     {
@@ -33,7 +34,7 @@ public abstract class WindowRoot : MonoBehaviour
         }
     }
 
-    protected bool GetWndState()
+    public bool GetWndState()
     {
         return gameObject.activeSelf;
     }
@@ -43,6 +44,7 @@ public abstract class WindowRoot : MonoBehaviour
         resSvc = ResSvc.Instance;
         audioSvc = AudioSvc.Instance;
         netSvc = NetSvc.Instance;
+        timeSvc = TimeSvc.Instance;
     }
 
     protected virtual void ClearWnd()
@@ -50,6 +52,7 @@ public abstract class WindowRoot : MonoBehaviour
         resSvc = null;
         audioSvc = null;
         netSvc = null;
+        timeSvc = null;
     }
 
     #region Tool Functions

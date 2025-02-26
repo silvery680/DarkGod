@@ -13,11 +13,13 @@ public abstract class SystemRoot : MonoBehaviour
     protected ResSvc resSvc;
     protected AudioSvc audioSvc;
     protected NetSvc netSvc;
+    protected TimeSvc timeSvc;
 
     public virtual void InitSys()
     {
         resSvc = ResSvc.Instance;
         audioSvc = AudioSvc.Instance;
         netSvc = NetSvc.Instance;
+        timeSvc = TimeSvc.Instance;
     }
 }
