@@ -23,6 +23,7 @@ public class ResSvc : MonoBehaviour
         InitMapCfg(PathDefine.MapCfg);
         InitGuideCfg(PathDefine.GuideCfg);
         InitStrongCfg(PathDefine.StrongCfg);
+        InitTaskRewardCfg(PathDefine.TaskCfg);
 
         PECommon.Log("Init ResSvc...");
     }
@@ -476,6 +477,81 @@ public class ResSvc : MonoBehaviour
             }
         }
         return val;
+    }
+    #endregion
+
+    #region 任务奖励配置
+    private Dictionary<int, TaskRewardCfg> taskRewardCfgDic = new Dictionary<int, TaskRewardCfg>();
+    private void InitTaskRewardCfg(string path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(path);
+        if (!xml)
+        {
+            PECommon.Log("xml File:" + path + " not exist", LogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);
+
+            XmlNodeList nodeList = doc.SelectSingleNode("root").ChildNodes;
+
+
+            foreach (XmlElement ele in nodeList)
+            {
+                if (ele.GetAttributeNode("ID") == null)
+                {
+                    continue;
+                }
+
+                int _ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+                TaskRewardCfg trc = new TaskRewardCfg()
+                {
+                    ID = _ID
+                };
+
+
+                foreach (XmlElement e in ele.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "taskName":
+                            {
+                                trc.taskName = e.InnerText;
+                            }
+                            break;
+                        case "count":
+                            {
+                                trc.count = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "exp":
+                            {
+                                trc.exp = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "coin":
+                            {
+                                trc.coin = int.Parse(e.InnerText);
+                            }
+                            break;
+                    }
+                }
+
+                taskRewardCfgDic.Add(_ID, trc);
+            }
+        }
+        PECommon.Log("TaskRewardCfg Load Done.");
+    }
+
+    public TaskRewardCfg GetTaskRewardCfg(int id)
+    {
+        TaskRewardCfg data = null;
+        if (taskRewardCfgDic.TryGetValue(id, out data))
+        {
+            return data;
+        }
+        return null;
     }
     #endregion
 

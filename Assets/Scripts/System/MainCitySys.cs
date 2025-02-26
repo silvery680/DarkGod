@@ -21,6 +21,7 @@ public class MainCitySys : SystemRoot
     public StrongWnd strongWnd;
     public ChatWnd chatWnd;
     public BuyWnd buyWnd;
+    public TaskWnd taskWnd;
 
     private PlayerController playerCtrl;
     private Transform charCamTrans;
@@ -346,6 +347,13 @@ public class MainCitySys : SystemRoot
         {
             mainCityWnd.RefreshUI();
         }
+    }
+    #endregion
+
+    #region Task Reward
+    public void OpenTaskRewardWnd()
+    {
+        taskWnd.SetWndState();
     }
     #endregion
 }
