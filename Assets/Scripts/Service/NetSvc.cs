@@ -90,6 +90,10 @@ public class NetSvc : MonoBehaviour
         {
             switch ((ErrorCode)msg.err)
             {
+                case ErrorCode.ClientDataError:
+                    GameRoot.AddTips("客户端任务数据异常");
+                    PECommon.Log("客户端与服务端任务数据不一致", LogType.Error);
+                    break;
                 case ErrorCode.LackDiamond:
                     GameRoot.AddTips("客户端水晶数据异常");
                     PECommon.Log("客户端与服务端水晶数据不一致", LogType.Error);
@@ -146,6 +150,12 @@ public class NetSvc : MonoBehaviour
                 break;
             case CMD.PshPower:
                 MainCitySys.Instance.PshPower(msg);
+                break;
+            case CMD.RspTakeTaskReward:
+                MainCitySys.Instance.RspTakeTaskReward(msg);
+                break;
+            case CMD.PshTaskPrgs:
+                MainCitySys.Instance.PshTaskPrgs(msg);
                 break;
         }
     }

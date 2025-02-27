@@ -108,6 +108,18 @@ public abstract class WindowRoot : MonoBehaviour
         Sprite sp = resSvc.LoadSprite(path, true);
         img.sprite = sp;
     }
+
+    protected Transform GetTrans(Transform trans, string name)
+    {
+        if (trans != null)
+        {
+            return trans.Find(name);
+        }
+        else
+        {
+            return transform.Find(name);
+        }
+    }
     #endregion
 
     #region Click Evts

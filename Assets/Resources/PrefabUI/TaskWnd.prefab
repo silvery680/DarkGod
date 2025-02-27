@@ -653,6 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57e1a9a2dca09e42ac66eb64e73076e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollTrans: {fileID: 224245703361537924}
 --- !u!114 &114725826989632108
 MonoBehaviour:
   m_ObjectHideFlags: 1

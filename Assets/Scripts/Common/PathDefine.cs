@@ -38,6 +38,10 @@ public class PathDefine
     public const string SpStar2 = "ResImages/star2";
     #endregion
 
+    #region TaskReward
+    public const string TaskItemPrefab = "PrefabUI/ItemTask";
+    #endregion
+
     #region AutoGuide
     public const string TaskHead = "ResImages/task";
     public const string WiseManHead = "ResImages/wiseman";

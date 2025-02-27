@@ -55,6 +55,8 @@ public class GameRoot : MonoBehaviour
         login.InitSys();
         MainCitySys mainCitySys = GetComponent<MainCitySys>();
         mainCitySys.InitSys();
+        MissionSys missionSys = GetComponent<MissionSys>();
+        missionSys.InitSys();
         
 
         // 进入到登录场景并且加载相应的UI
@@ -120,5 +122,17 @@ public class GameRoot : MonoBehaviour
     public void SetPlayerDataByPower(PshPower data)
     {
         playerData.power = data.power;
+    }
+
+    public void SetPlayerDataByTask(RspTaskTaskReward data)
+    {
+        playerData.coin = data.coin;
+        playerData.lv = data.lv;
+        playerData.exp = data.exp;
+        playerData.taskArr = data.taskArr;
+    }
+    public void SetPlayerDataByTaskPsh(PshTaskPrgs data)
+    {
+        playerData.taskArr = data.taskArr;
     }
 }

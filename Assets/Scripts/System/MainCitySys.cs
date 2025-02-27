@@ -111,12 +111,13 @@ public class MainCitySys : SystemRoot
         }
 
         playerCtrl.Dir = dir;
-    } 
+    }
     #endregion
 
     #region StrongWnd
     public void OpenStrongWnd()
     {
+        StopNavTask();
         strongWnd.SetWndState();
     }
     public void RspStrong(GameMsg msg)
@@ -285,18 +286,23 @@ public class MainCitySys : SystemRoot
                 break;
             case 1:
                 // 进入副本
+                EnterMission();
                 break;
             case 2:
                 // 进入强化界面
+                OpenStrongWnd();
                 break;
             case 3:
                 // 进入体力购买
+                OpenBuyWnd(BuyType.Power);
                 break;
             case 4:
                 // 进入金币铸造
+                OpenBuyWnd(BuyType.Coin);
                 break;
             case 5:
                 // 进入世界聊天
+                OpenChatWnd();
                 break;
         }
         GameRoot.Instance.SetPlayerDataByGuide(data);
@@ -310,6 +316,7 @@ public class MainCitySys : SystemRoot
     /// </summary>
     public void OpenChatWnd()
     {
+        StopNavTask();
         chatWnd.SetWndState();
     }
 
@@ -322,6 +329,7 @@ public class MainCitySys : SystemRoot
     #region Buy
     public void OpenBuyWnd(BuyType type)
     {
+        StopNavTask();
         buyWnd.SetBuyType(type);
         buyWnd.SetWndState();
     }
@@ -353,7 +361,33 @@ public class MainCitySys : SystemRoot
     #region Task Reward
     public void OpenTaskRewardWnd()
     {
+        StopNavTask();
         taskWnd.SetWndState();
+    }
+
+    public void RspTakeTaskReward(GameMsg msg)
+    {
+        RspTaskTaskReward data = msg.rspTaskTaskReward;
+        GameRoot.Instance.SetPlayerDataByTask(data);
+
+        if (taskWnd.GetWndState()) taskWnd.RefreshUI();
+    }
+
+    public void PshTaskPrgs(GameMsg msg)
+    {
+        PshTaskPrgs data = msg.pshTaskPrgs;
+        GameRoot.Instance.SetPlayerDataByTaskPsh(data);
+    }
+    #endregion
+
+    #region Mission
+    /// <summary>
+    /// 进入副本
+    /// </summary>
+    public void EnterMission()
+    {
+        StopNavTask();
+        MissionSys.Instance.EnterMission();
     }
     #endregion
 }
