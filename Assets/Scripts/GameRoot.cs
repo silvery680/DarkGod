@@ -55,8 +55,10 @@ public class GameRoot : MonoBehaviour
         login.InitSys();
         MainCitySys mainCitySys = GetComponent<MainCitySys>();
         mainCitySys.InitSys();
-        MissionSys missionSys = GetComponent<MissionSys>();
-        missionSys.InitSys();
+        FubenSys fubenSys = GetComponent<FubenSys>();
+        fubenSys.InitSys();
+        BattleSys battleSys = GetComponent<BattleSys>();
+        battleSys.InitSys();
         
 
         // 进入到登录场景并且加载相应的UI
@@ -134,5 +136,10 @@ public class GameRoot : MonoBehaviour
     public void SetPlayerDataByTaskPsh(PshTaskPrgs data)
     {
         playerData.taskArr = data.taskArr;
+    }
+
+    public void SetPlayerDataByFBStart(RspFBFight data)
+    {
+        playerData.power = data.power;
     }
 }

@@ -59,5 +59,6 @@ public class PathDefine
 
     #region Player
     public const string AssissnCityPlayerPrefab = "PrefabPlayer/AssassinCity";
+    public const string AssissnBattlePlayerPrefab = "PrefabPlayer/AssassinBattle";
     #endregion
 }

@@ -66,6 +66,8 @@ public class Constants
     public const string BGLogin = "bgLogin";
     // 主城场景音效
     public const string BGMainCity = "bgMainCity";
+    // 副本场景音效
+    public const string BGHuangYe = "bgHuangYe";
     #endregion
 
     // 登录按钮音效

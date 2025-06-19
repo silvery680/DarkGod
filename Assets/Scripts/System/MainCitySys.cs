@@ -286,7 +286,7 @@ public class MainCitySys : SystemRoot
                 break;
             case 1:
                 // 进入副本
-                EnterMission();
+                EnterFuben();
                 break;
             case 2:
                 // 进入强化界面
@@ -380,14 +380,14 @@ public class MainCitySys : SystemRoot
     }
     #endregion
 
-    #region Mission
+    #region Fuben
     /// <summary>
     /// 进入副本
     /// </summary>
-    public void EnterMission()
+    public void EnterFuben()
     {
         StopNavTask();
-        MissionSys.Instance.EnterMission();
+        FubenSys.Instance.EnterFuben();
     }
     #endregion
 }

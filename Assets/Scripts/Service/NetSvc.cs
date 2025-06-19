@@ -110,6 +110,10 @@ public class NetSvc : MonoBehaviour
                     GameRoot.AddTips("客户端水晶数据异常");
                     PECommon.Log("客户端与服务端水晶数据不一致", LogType.Error);
                     break;
+                case ErrorCode.LackPower:
+                    GameRoot.AddTips("客户端体力数据异常");
+                    PECommon.Log("客户端与服务端体力数据不一致", LogType.Error);
+                    break;
                 case ErrorCode.SeverDataError:
                     GameRoot.AddTips("客户端数据异常");
                     PECommon.Log("客户端与服务端数据不一致", LogType.Error);
@@ -156,6 +160,9 @@ public class NetSvc : MonoBehaviour
                 break;
             case CMD.PshTaskPrgs:
                 MainCitySys.Instance.PshTaskPrgs(msg);
+                break;
+            case CMD.RspFBFight:
+                FubenSys.Instance.RspFBFight(msg);
                 break;
         }
     }

@@ -28,6 +28,7 @@ public class TaskWnd : WindowRoot
 
     public void ClickCloseBtn()
     {
+        audioSvc.PlayUIAudio(Constants.UIClickBtn);
         SetWndState(false);
     }
 

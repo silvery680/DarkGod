@@ -222,6 +222,9 @@ public class ResSvc : MonoBehaviour
                         case "sceneName":
                             mc.sceneName = e.InnerText;
                             break;
+                        case "power":
+                            mc.power = int.Parse(e.InnerText);
+                            break;
                         case "mainCamPos":
                             {
                                 string[] valArr = e.InnerText.Split(',');

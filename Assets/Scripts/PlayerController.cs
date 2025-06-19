@@ -3,12 +3,12 @@
 	Author：groudhog
     E-Mail: silvery680@gmail.com
     Time：2025/2/22 21:26:23
-	Description ：角色控制器
+	Description ：表现实体角色控制器
 *****************************************************/
 
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour 
+public class PlayerController : Controller 
 {
     private Transform camTrans;
     private Vector3 camOffset;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        /*
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
             Dir = Vector2.zero;
             SetBlend(Constants.BlendIdle);
         }
-        */
+
 
 
 
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
     private void SetDir()
     {
-        float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)) + camTrans.eulerAngles.y;
+        float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)); //+ camTrans.eulerAngles.y;
         Vector3 eulerAngles = new Vector3(0, angle, 0);
         transform.localEulerAngles = eulerAngles;
     }
