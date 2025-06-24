@@ -27,6 +27,8 @@ public class PlayCtrlWnd : WindowRoot
     private Vector2 startPos = Vector2.zero;
     private Vector2 defaultPos = Vector2.zero;
 
+    public Vector2 currentDir;
+
     protected override void InitWnd()
     {
         base.InitWnd();
@@ -95,7 +97,8 @@ public class PlayCtrlWnd : WindowRoot
             imgDirPoint.transform.localPosition = Vector2.zero;
 
             // 方向信息传递
-            BattleSys.Instance.SetMoveDir(Vector2.zero);
+            currentDir = Vector2.zero;
+            BattleSys.Instance.SetMoveDir(currentDir);
         });
 
         OnDrag(imgTouch.gameObject, (PointerEventData evt) =>
@@ -112,7 +115,8 @@ public class PlayCtrlWnd : WindowRoot
                 imgDirPoint.transform.position = evt.position;
             }
             // 方向信息传递
-            BattleSys.Instance.SetMoveDir(dir.normalized);
+            currentDir = dir.normalized;
+            BattleSys.Instance.SetMoveDir(currentDir);
         });
     }
 

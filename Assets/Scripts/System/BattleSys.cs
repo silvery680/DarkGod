@@ -51,4 +51,9 @@ public class BattleSys : SystemRoot
     {
         battleMgr.ReqReleaseSkill(index);
     }
+
+    public Vector2 GetDirInput()
+    {
+        return playCtrlWnd.currentDir;
+    }
 }

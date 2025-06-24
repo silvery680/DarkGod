@@ -1065,6 +1065,7 @@ GameObject:
   - component: {fileID: 95747776026985320}
   - component: {fileID: 143117156351649782}
   - component: {fileID: 114341162052816628}
+  - component: {fileID: 114151732159491052}
   m_Layer: 9
   m_Name: AssassinBattle
   m_TagString: Player
@@ -4787,6 +4788,20 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114151732159491052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1510258016765248}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd60c73f8f45bc4689830dd035ca48f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ctrl: {fileID: 143117156351649782}
+  ani: {fileID: 95747776026985320}
+  daggerskill1fx: {fileID: 1808796235245196}
 --- !u!114 &114341162052816628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4799,6 +4814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 95747776026985320}
+  daggeratk1fx: {fileID: 1808796235245196}
   ctrl: {fileID: 143117156351649782}
 --- !u!137 &137320906825855908
 SkinnedMeshRenderer:
@@ -87295,7 +87311,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -87336,7 +87352,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:

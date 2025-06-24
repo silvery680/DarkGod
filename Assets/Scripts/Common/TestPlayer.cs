@@ -1,21 +1,28 @@
 /****************************************************
-    File：PlayerController.cs
+    File：TestPlayer.cs
 	Author：groudhog
     E-Mail: silvery680@gmail.com
-    Time：2025/2/22 21:26:23
-	Description ：表现实体角色控制器
+    Time：2025/6/21 13:0:57
+	Description ：Nothing
 *****************************************************/
 
+using System.Collections;
 using UnityEngine;
 
-public class PlayerController : Controller 
+public class TestPlayer : MonoBehaviour 
 {
     private Transform camTrans;
     private Vector3 camOffset;
-    public Animator ani;
+
     public CharacterController ctrl;
 
-    private bool isMove = false;
+    private float targetBlend;
+    private float currentBlend;
+
+    public Animator ani;
+    public GameObject daggerskill1fx;
+
+    protected bool isMove = false;
     private Vector2 dir = Vector2.zero;
     public Vector2 Dir
     {
@@ -38,14 +45,12 @@ public class PlayerController : Controller
         }
     }
 
-    private float targetBlend;
-    private float currentBlend;
-
-    public void Init()
+    public void Start()
     {
         camTrans = Camera.main.transform;
         camOffset = transform.position - camTrans.position;
     }
+
 
     private void Update()
     {
@@ -58,7 +63,7 @@ public class PlayerController : Controller
         if (_dir != Vector2.zero)
         {
             Dir = _dir;
-            SetBlend(Constants.BlendWalk);
+            SetBlend(Constants.BlendMove);
         }
         else
         {
@@ -66,14 +71,11 @@ public class PlayerController : Controller
             SetBlend(Constants.BlendIdle);
         }
 
-
-
-
         if (currentBlend != targetBlend)
         {
             UpdateMixBlend();
         }
-            
+
         if (isMove)
         {
             // 设置方向
@@ -82,12 +84,12 @@ public class PlayerController : Controller
             SetMove();
             // 相机跟随
             SetCam();
-            }
+        }
     }
 
     private void SetDir()
     {
-        float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)); //+ camTrans.eulerAngles.y;
+        float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)) + camTrans.eulerAngles.y;
         Vector3 eulerAngles = new Vector3(0, angle, 0);
         transform.localEulerAngles = eulerAngles;
     }
@@ -125,5 +127,19 @@ public class PlayerController : Controller
             currentBlend += Constants.AccelerSpeed * Time.deltaTime;
         }
         ani.SetFloat("Blend", currentBlend);
+    }
+
+    public void ClickSkill1Btn()
+    {
+        ani.SetInteger("Action", 1);
+        daggerskill1fx.gameObject.SetActive(true);
+        StartCoroutine(Delay());
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.9f);
+        ani.SetInteger("Action", -1);
+        daggerskill1fx.gameObject.SetActive(false);
     }
 }

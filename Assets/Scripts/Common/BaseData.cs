@@ -5,6 +5,7 @@
 	Description: 配置数据类
 *********************************************************************/
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StrongCfg : BaseData<StrongCfg>
@@ -51,6 +52,22 @@ public class TaskRewardData :BaseData<TaskRewardData>
 {
     public int prgs;
     public bool taked;
+}
+
+public class SkillCfg : BaseData<SkillCfg>
+{
+    public string skillName;
+    public int skillTime;
+    public int aniAction;
+    public string fx;
+    public List<int> skillMoveLst;
+}
+
+public class SkillMoveCfg : BaseData<SkillMoveCfg>
+{
+    public int delayTime;
+    public int moveTime;
+    public float moveDis;
 }
 
 public class BaseData<T>

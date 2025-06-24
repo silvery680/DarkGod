@@ -16,6 +16,8 @@ public class PathDefine
     public const string GuideCfg = "ResCfgs/guide";
     public const string StrongCfg = "ResCfgs/strong";
     public const string TaskCfg = "ResCfgs/taskreward";
+    public const string SkillCfg = "ResCfgs/skill";
+    public const string SkillMoveCfg = "ResCfgs/skillMove";
     #endregion
 
     #region Chat

@@ -25,6 +25,9 @@ public class ResSvc : MonoBehaviour
         InitStrongCfg(PathDefine.StrongCfg);
         InitTaskRewardCfg(PathDefine.TaskCfg);
 
+        InitSkillCfg(PathDefine.SkillCfg);
+        InitSkillMoveCfg(PathDefine.SkillMoveCfg);
+
         PECommon.Log("Init ResSvc...");
     }
 
@@ -551,6 +554,164 @@ public class ResSvc : MonoBehaviour
     {
         TaskRewardCfg data = null;
         if (taskRewardCfgDic.TryGetValue(id, out data))
+        {
+            return data;
+        }
+        return null;
+    }
+    #endregion
+
+    #region 技能配置
+    private Dictionary<int, SkillCfg> skillCfgDic = new Dictionary<int, SkillCfg>();
+    private void InitSkillCfg(string path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(path);
+        if (!xml)
+        {
+            PECommon.Log("xml File:" + path + " not exist", LogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);
+
+            XmlNodeList nodeList = doc.SelectSingleNode("root").ChildNodes;
+
+
+            foreach (XmlElement ele in nodeList)
+            {
+                if (ele.GetAttributeNode("ID") == null)
+                {
+                    continue;
+                }
+
+                int _ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+                SkillCfg sc = new SkillCfg()
+                {
+                    ID = _ID,
+                    skillMoveLst = new List<int>()
+                };
+
+
+                foreach (XmlElement e in ele.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "skillName":
+                            {
+                                sc.skillName = e.InnerText;
+                            }
+                            break;
+                        case "skillTime":
+                            {
+                                sc.skillTime = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "aniAction":
+                            {
+                                sc.aniAction = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "fx":
+                            {
+                                sc.fx = e.InnerText;
+                            }
+                            break;
+                        case "skillMoveLst":
+                            {
+                                string[] skMoveArr = e.InnerText.Split('|');
+                                for (int i = 0; i < skMoveArr.Length; i++)
+                                {
+                                    if (!String.IsNullOrEmpty(skMoveArr[i]))
+                                    {
+                                        sc.skillMoveLst.Add(int.Parse(skMoveArr[i]));
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+
+                skillCfgDic.Add(_ID, sc);
+            }
+        }
+        PECommon.Log("SkillCfg Load Done.");
+    }
+
+    public SkillCfg GetSkillCfg(int id)
+    {
+        SkillCfg data = null;
+        if (skillCfgDic.TryGetValue(id, out data))
+        {
+            return data;
+        }
+        return null;
+    }
+    #endregion
+
+    #region 技能位移配置
+    private Dictionary<int, SkillMoveCfg> skillMoveCfgDic = new Dictionary<int, SkillMoveCfg>();
+    private void InitSkillMoveCfg(string path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(path);
+        if (!xml)
+        {
+            PECommon.Log("xml File:" + path + " not exist", LogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);
+
+            XmlNodeList nodeList = doc.SelectSingleNode("root").ChildNodes;
+
+
+            foreach (XmlElement ele in nodeList)
+            {
+                if (ele.GetAttributeNode("ID") == null)
+                {
+                    continue;
+                }
+
+                int _ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+                SkillMoveCfg smc = new SkillMoveCfg()
+                {
+                    ID = _ID
+                };
+
+
+                foreach (XmlElement e in ele.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "delayTime":
+                            {
+                                smc.delayTime = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "moveTime":
+                            {
+                                smc.moveTime = int.Parse(e.InnerText);
+                            }
+                            break;
+                        case "moveDis":
+                            {
+                                smc.moveDis = float.Parse(e.InnerText);
+                            }
+                            break;
+                    }
+                }
+
+                skillMoveCfgDic.Add(_ID, smc);
+            }
+        }
+        PECommon.Log("SkillMoveCfg Load Done.");
+    }
+
+    public SkillMoveCfg GetSkillMoveCfg(int id)
+    {
+        SkillMoveCfg data = null;
+        if (skillMoveCfgDic.TryGetValue(id, out data))
         {
             return data;
         }

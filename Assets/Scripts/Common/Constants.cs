@@ -89,9 +89,12 @@ public class Constants
     // 摇杆点标准距离
     public const int ScreenOPDis = 90;
 
+    // Action触发参数
+    public const int ActionDefault = -1;
+
     // 混合参数
     public const int BlendIdle = 0;
-    public const int BlendWalk = 1;
+    public const int BlendMove = 1;
 
     // 角色移动速度
     public const int PlayerMoveSpeed = 8;

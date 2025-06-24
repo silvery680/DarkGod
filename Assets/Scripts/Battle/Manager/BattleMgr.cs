@@ -5,6 +5,7 @@
 	Description: 战场管理器
 *********************************************************************/
 
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -45,6 +46,7 @@ public class BattleMgr : MonoBehaviour {
             Camera.main.transform.localEulerAngles = mapData.mainCamRote;
 
             LoadPlayer(mapData);
+            entitySelfPlayer.Idle();
 
             audioSvc.PlayBGMusic(Constants.BGHuangYe);
         });
@@ -61,7 +63,9 @@ public class BattleMgr : MonoBehaviour {
 
         entitySelfPlayer = new EntityPlayer()
         {
+            battleMgr = this,
             stateMgr = stateMgr,
+            skillMgr = skillMgr,
         };
 
         PlayerController playerController = player.GetComponent<PlayerController>();
@@ -72,6 +76,11 @@ public class BattleMgr : MonoBehaviour {
     public void SetSelfPlayerMoveDir(Vector2 moveDir)
     {
         //PECommon.Log(moveDir.ToString());
+        if (entitySelfPlayer.canControl == false)
+        {
+            return;
+        }
+
         if (moveDir == Vector2.zero)
         {
             entitySelfPlayer.Idle();
@@ -79,6 +88,7 @@ public class BattleMgr : MonoBehaviour {
         else
         {
             entitySelfPlayer.Move();
+            entitySelfPlayer.SetDir(moveDir);
         }
     }
 
@@ -109,6 +119,7 @@ public class BattleMgr : MonoBehaviour {
     private void ReleaseSkill1()
     {
         PECommon.Log("Click Skill1");
+        entitySelfPlayer.Attack(101);
     }
 
     private void ReleaseSkill2()
@@ -119,5 +130,10 @@ public class BattleMgr : MonoBehaviour {
     private void ReleaseSkill3()
     {
         PECommon.Log("Click Skill3");
+    }
+
+    public Vector2 GetDirInput()
+    {
+        return BattleSys.Instance.GetDirInput();
     }
 }

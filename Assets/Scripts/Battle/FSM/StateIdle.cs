@@ -5,20 +5,32 @@
 	Description: 待机状态
 *********************************************************************/
 
+using UnityEngine;
+
 class StateIdle : IState
 {
-    public void Enter(EntityBase entity)
+    public void Enter(EntityBase entity, params object[] args)
     {
         entity.currentAniState = AniState.Idle;
+        entity.SetDir(Vector2.zero);
         PECommon.Log("Idle Enter");
     }
 
-    public void Process(EntityBase entity)
+    public void Process(EntityBase entity, params object[] args)
     {
+        if (entity.GetDirInput() != Vector2.zero)
+        {
+            entity.Move();
+            entity.SetDir(entity.GetDirInput());
+        }
+        else
+        {
+            entity.SetBlend(Constants.BlendIdle);
+        }   
         PECommon.Log("Idle Process");
     }
 
-    public void Exit(EntityBase entity)
+    public void Exit(EntityBase entity, params object[] args)
     {
         PECommon.Log("Idle Exit");
     }
