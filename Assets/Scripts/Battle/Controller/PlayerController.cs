@@ -15,7 +15,6 @@ public class PlayerController : Controller
     private Transform camTrans;
     private Vector3 camOffset;
     //public Animator ani;
-    public CharacterController ctrl;
 
     private float targetBlend;
     private float currentBlend;

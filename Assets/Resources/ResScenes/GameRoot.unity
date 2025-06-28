@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -2033,7 +2033,7 @@ Prefab:
     - target: {fileID: 224290769770443538, guid: bff56d7372379e94492f5b8c5b90005d,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 57.7
+      value: 57.69922
       objectReference: {fileID: 0}
     - target: {fileID: 224290769770443538, guid: bff56d7372379e94492f5b8c5b90005d,
         type: 2}
@@ -2063,7 +2063,7 @@ Prefab:
     - target: {fileID: 224324879344718814, guid: bff56d7372379e94492f5b8c5b90005d,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 183.1
+      value: 183.09961
       objectReference: {fileID: 0}
     - target: {fileID: 224324879344718814, guid: bff56d7372379e94492f5b8c5b90005d,
         type: 2}
@@ -2123,7 +2123,7 @@ Prefab:
     - target: {fileID: 224192494970628424, guid: bff56d7372379e94492f5b8c5b90005d,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 433.90002
+      value: 433.9004
       objectReference: {fileID: 0}
     - target: {fileID: 224192494970628424, guid: bff56d7372379e94492f5b8c5b90005d,
         type: 2}

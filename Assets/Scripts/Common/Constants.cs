@@ -14,6 +14,13 @@ public enum TxtColor
     Yellow,
 }
 
+public enum DamageType
+{
+    None,
+    AD = 1,
+    AP = 2,
+}
+
 public class Constants
 {
     // 不能加空格
@@ -91,6 +98,11 @@ public class Constants
 
     // Action触发参数
     public const int ActionDefault = -1;
+    public const int ActionBorn = 0;
+    public const int ActionDie = 100;
+    public const int ActionHit = 101;
+
+    public const int DieAniLength = 5000;
 
     // 混合参数
     public const int BlendIdle = 0;
@@ -102,4 +114,5 @@ public class Constants
 
     // 运动平滑加速度
     public const float AccelerSpeed = 5;
+    
 }

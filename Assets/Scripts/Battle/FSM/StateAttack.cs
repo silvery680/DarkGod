@@ -19,7 +19,8 @@ public class StateAttack : IState
     public void Process(EntityBase entity, params object[] args)
     {
         PECommon.Log("Process StateAttack.");
-        entity.AttackEffect((int)args[0]);
+        // 技能效果表现和伤害运算
+        entity.SkillAttack((int)args[0]);
     }
 
     public void Exit(EntityBase entity, params object[] args)

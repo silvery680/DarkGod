@@ -18,7 +18,53 @@ public class EntityBase
 
 	public bool canControl = true;
 
-	public void Move()
+	private BattleProps battleProps;
+
+    public BattleProps BattleProps
+    {
+        get
+        {
+            return battleProps;
+        }
+
+        protected set
+        {
+            battleProps = value;
+        }
+    }
+
+    private int hp;
+    public int HP
+    {
+        get
+        {
+            return hp;
+        }
+
+        set
+        {
+			// 数据驱动，通知UI刷新
+			PECommon.Log("HP change: " + hp + " to " + value);
+            hp = value;
+        }
+    }
+
+	public void Born()
+	{
+		stateMgr.ChangeState(this, AniState.Born, null);
+	}
+
+    public void Die()
+    {
+        stateMgr.ChangeState(this, AniState.Die, null);
+    }
+
+    public void Hit()
+    {
+        stateMgr.ChangeState(this, AniState.Hit, null);
+    }
+
+    public void Move()
 	{
 		stateMgr.ChangeState(this, AniState.Move, null);
 	}
@@ -32,6 +78,12 @@ public class EntityBase
     {
         stateMgr.ChangeState(this, AniState.Attack, skillID);
     }
+
+	public virtual void SetBattleProps(BattleProps props)
+	{
+		HP = props.hp;
+		BattleProps = props;
+	}
 
     public virtual void SetBlend(float blend)
 	{
@@ -73,13 +125,23 @@ public class EntityBase
 		}
     }
 
-    public virtual void AttackEffect(int skillID)
+    public virtual void SkillAttack(int skillID)
 	{
-		skillMgr.AttackEffect(this, skillID);
+		skillMgr.SkillAttack(this, skillID);
 	}
 
-	public virtual Vector2 GetDirInput()
+    public virtual Vector2 GetDirInput()
 	{
 		return Vector2.zero;
+	}
+
+	public virtual Vector3 GetPos()
+	{
+		return controller.transform.position;
+	}
+
+	public virtual Transform GetTrans()
+	{
+		return controller.transform;
 	}
 }
