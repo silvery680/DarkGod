@@ -7,9 +7,6 @@
 
 using PEProtocol;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 using UnityEngine;
 
 public class BattleMgr : MonoBehaviour {
@@ -90,11 +87,12 @@ public class BattleMgr : MonoBehaviour {
             stateMgr = stateMgr,
             skillMgr = skillMgr,
         };
+        entitySelfPlayer.Name = "AssassinBattle";
         entitySelfPlayer.SetBattleProps(props);
 
         PlayerController playerController = player.GetComponent<PlayerController>();
         playerController.Init();
-        entitySelfPlayer.controller = playerController;
+        entitySelfPlayer.SetCtrl(playerController);
     }
 
     public void LoadMonsterByWaveID(int wave)
@@ -120,13 +118,15 @@ public class BattleMgr : MonoBehaviour {
                 // 设置初始属性
                 em.md = md;
                 em.SetBattleProps(md.mCfg.bps);
+                em.Name = m.name;
 
                 MonsterController mc = m.GetComponent<MonsterController>();
                 mc.Init();
-                em.controller = mc;
+                em.SetCtrl(mc);
 
-                monsterDic.Add(m.name, em);
                 m.SetActive(false);
+                monsterDic.Add(m.name, em);
+                GameRoot.Instance.dynamicWnd.AddHpItemInfo(m.name, mc.hpRoot, em.HP);
             }
         }
     }
@@ -137,7 +137,7 @@ public class BattleMgr : MonoBehaviour {
         {
             foreach (var item in monsterDic.Values)
             {
-                item.controller.gameObject.SetActive(true);
+                item.SetActive(true);
                 item.Born();
                 // 出生一秒后进Idle
                 TimeSvc.Instance.AddTimeTask((int tid2) =>
@@ -156,6 +156,16 @@ public class BattleMgr : MonoBehaviour {
             monsterLst.Add(item);
         }
         return monsterLst;
+    }
+
+    public void RemoveMonster(string key)
+    {
+        EntityMonster entityMonster;
+        if (monsterDic.TryGetValue(key, out entityMonster))
+        {
+            monsterDic.Remove(key);
+            GameRoot.Instance.dynamicWnd.RemoveHpItemInfo(key);
+        }
     }
 
     #region 技能释放与角色控制
@@ -197,25 +207,58 @@ public class BattleMgr : MonoBehaviour {
         }
     }
 
+    public double lastAtkTime = 0;
+    private int[] comboArr = new int[]
+    {
+        111, 112, 113, 114, 115,
+    };
+    private int comboIndex = 0;
     private void ReleaseNormalAtk()
     {
-        PECommon.Log("Click Normal Attack");
+        //PECommon.Log("Click Normal Attack");
+        if (entitySelfPlayer.currentAniState == AniState.Attack)
+        {
+            // 在500ms以内进行第二次点击，存数据
+            double nowAtkTime = TimeSvc.Instance.GetNowTime();
+            if (nowAtkTime - lastAtkTime < Constants.ComboSpace && lastAtkTime != 0)
+            {
+                if (comboArr[comboIndex] != comboArr[comboArr.Length - 1])
+                {
+                    comboIndex += 1;
+                    entitySelfPlayer.comboQue.Enqueue(comboArr[comboIndex]);
+                    lastAtkTime = nowAtkTime;
+                }
+            }
+            else
+            {
+                lastAtkTime = 0;
+                comboIndex = 0;
+            }
+        }
+        else if (entitySelfPlayer.currentAniState == AniState.Idle || entitySelfPlayer.currentAniState == AniState.Move)
+        {
+            comboIndex = 0;
+            lastAtkTime = TimeSvc.Instance.GetNowTime();
+            entitySelfPlayer.Attack(comboArr[comboIndex]);
+        }
     }
 
     private void ReleaseSkill1()
     {
-        PECommon.Log("Click Skill1");
+        //PECommon.Log("Click Skill1");
         entitySelfPlayer.Attack(101);
     }
 
     private void ReleaseSkill2()
     {
-        PECommon.Log("Click Skill2");
+        //PECommon.Log("Click Skill2");
+        entitySelfPlayer.Attack(102);
     }
 
     private void ReleaseSkill3()
     {
-        PECommon.Log("Click Skill3");
+        //PECommon.Log("Click Skill3");
+        entitySelfPlayer.Attack(103);
     }
 
     public Vector2 GetDirInput()

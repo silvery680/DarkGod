@@ -13,20 +13,20 @@ public class StateAttack : IState
     public void Enter(EntityBase entity, params object[] args)
     {
         entity.currentAniState = AniState.Attack;
-        PECommon.Log("Enter StateAttack.");
+        entity.curtSkillCfg = ResSvc.Instance.GetSkillCfg((int)args[0]);
+        //PECommon.Log("Enter StateAttack.");
     }
 
     public void Process(EntityBase entity, params object[] args)
     {
-        PECommon.Log("Process StateAttack.");
+        //PECommon.Log("Process StateAttack.");
         // 技能效果表现和伤害运算
         entity.SkillAttack((int)args[0]);
     }
 
     public void Exit(EntityBase entity, params object[] args)
     {
-        PECommon.Log("Exit StateAttack.");
-        entity.canControl = true;
-        entity.SetAction(Constants.ActionDefault);
+        //PECommon.Log("Exit StateAttack.");
+        entity.ExitCurtSkill();
     }
 }

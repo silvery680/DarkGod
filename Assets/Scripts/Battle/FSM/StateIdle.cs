@@ -13,25 +13,32 @@ class StateIdle : IState
     {
         entity.currentAniState = AniState.Idle;
         entity.SetDir(Vector2.zero);
-        PECommon.Log("Idle Enter");
+        //PECommon.Log("Idle Enter");
     }
 
     public void Process(EntityBase entity, params object[] args)
     {
-        if (entity.GetDirInput() != Vector2.zero)
+        if (entity.nextSkillId != 0)
         {
-            entity.Move();
-            entity.SetDir(entity.GetDirInput());
+            entity.Attack(entity.nextSkillId);
         }
         else
         {
-            entity.SetBlend(Constants.BlendIdle);
-        }   
-        PECommon.Log("Idle Process");
+            if (entity.GetDirInput() != Vector2.zero)
+            {
+                entity.Move();
+                entity.SetDir(entity.GetDirInput());
+            }
+            else
+            {
+                entity.SetBlend(Constants.BlendIdle);
+            }    
+        }
+        //PECommon.Log("Idle Process");
     }
 
     public void Exit(EntityBase entity, params object[] args)
     {
-        PECommon.Log("Idle Exit");
+        //PECommon.Log("Idle Exit");
     }
 }

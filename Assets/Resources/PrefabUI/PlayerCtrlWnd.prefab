@@ -2425,6 +2425,13 @@ MonoBehaviour:
   txtName: {fileID: 114328363766564056}
   txtExpPrg: {fileID: 114070546636001012}
   expPrgTrans: {fileID: 224384671437801002}
+  currentDir: {x: 0, y: 0}
+  imgSk1CD: {fileID: 114595841054770170}
+  txtSk1CD: {fileID: 114701619240252742}
+  imgSk2CD: {fileID: 114758925779101718}
+  txtSk2CD: {fileID: 114894579986096570}
+  imgSk3CD: {fileID: 114164627407000674}
+  txtSk3CD: {fileID: 114631622246623894}
 --- !u!114 &114894579986096570
 MonoBehaviour:
   m_ObjectHideFlags: 1

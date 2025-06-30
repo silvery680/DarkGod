@@ -23,11 +23,15 @@ public class StateHit : IState
         entity.SetDir(Vector2.zero);
         entity.SetAction(Constants.ActionHit);
 
-        TimeSvc.Instance.AddTimeTask((int tid2) =>
+        TimeSvc.Instance.AddTimeTask((int tid1) =>
         {
-            entity.SetAction(Constants.ActionDefault);
-            entity.Idle();
-        }, (int)(GetHitAniLen(entity) * 1000.0f));
+            TimeSvc.Instance.AddTimeTask((int tid2) =>
+            {
+                entity.SetAction(Constants.ActionDefault);
+                entity.Idle();
+            }, (int)(GetHitAniLen(entity) * 1000.0f));
+        }, 50);
+
     }
 
     public void Exit(EntityBase entity, params object[] args)
@@ -36,16 +40,19 @@ public class StateHit : IState
 
     private float GetHitAniLen(EntityBase entity)
     {
-        AnimationClip[] clips = entity.controller.ani.runtimeAnimatorController.animationClips;
-        for (int i = 0; i < clips.Length; i++)
-        {
-            string clipName = clips[i].name;
-            if (clipName.Contains("hit") || clipName.Contains("Hit") || clipName.Contains("HIT"))
-            {
-                return clips[i].length;
-            }
-        }
-        保护值
-         return 1;
+        AnimatorStateInfo animatorStateInfo = entity.GetAnimatorStateInfo();
+        float remainTime = (1.0f - animatorStateInfo.normalizedTime) * animatorStateInfo.length;
+        return remainTime;
+        //AnimationClip[] clips = entity.controller.ani.runtimeAnimatorController.animationClips;
+        //for (int i = 0; i < clips.Length; i++)
+        //{
+        //    string clipName = clips[i].name;
+        //    if (clipName.Contains("hit") || clipName.Contains("Hit") || clipName.Contains("HIT"))
+        //    {
+        //        return clips[i].length;
+        //    }
+        //}
+        ////保护值
+        // return 1;
     }
 }

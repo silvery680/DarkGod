@@ -20,7 +20,7 @@ public class StateDie : IState
         entity.SetAction(Constants.ActionDie);
         TimeSvc.Instance.AddTimeTask((int tid) =>
         {
-            entity.controller.gameObject.SetActive(false);
+            entity.SetActive(false);
         }, Constants.DieAniLength);
     }
 

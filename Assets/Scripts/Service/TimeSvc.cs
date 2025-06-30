@@ -37,4 +37,9 @@ public class TimeSvc : SystemRoot
     {
         return pt.AddTimeTask(cb, delay, timeUnit, count);
     }
+
+    public double GetNowTime()
+    {
+        return pt.GetMillisecondsTime();
+    }
 }

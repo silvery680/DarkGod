@@ -4814,8 +4814,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 95747776026985320}
-  daggeratk1fx: {fileID: 1808796235245196}
   ctrl: {fileID: 143117156351649782}
+  hpRoot: {fileID: 4731589088223280}
+  daggerskill1fx: {fileID: 1808796235245196}
+  daggerskill2fx: {fileID: 1994469687690680}
+  daggerskill3fx: {fileID: 1545503097727058}
+  daggeratk1fx: {fileID: 1574333965651294}
+  daggeratk2fx: {fileID: 1240077508856758}
+  daggeratk3fx: {fileID: 1533325590341892}
+  daggeratk4fx: {fileID: 1542905578090348}
+  daggeratk5fx: {fileID: 1373573045131132}
 --- !u!137 &137320906825855908
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

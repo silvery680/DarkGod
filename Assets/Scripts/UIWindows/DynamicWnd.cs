@@ -16,9 +16,12 @@ public class DynamicWnd : WindowRoot
 {
     public Animation tipsAni;
     public Text txtTips;
+    public Transform hpItemRoot;
 
     private bool isTipsShow = false;
     private Queue<string> tipsQue = new Queue<string>();
+    private Dictionary<string, ItemEntityHp> itemDic = new Dictionary<string, ItemEntityHp>();
+
     private string preTips = "";
 
     protected override void InitWnd()
@@ -27,7 +30,20 @@ public class DynamicWnd : WindowRoot
 
         SetActive(txtTips, false);
     }
+    private void Update()
+    {
+        if (tipsQue.Count > 0 && isTipsShow == false)
+        {
+            lock(tipsQue)
+            {
+                string tips = tipsQue.Dequeue();
+                isTipsShow = true;
+                SetTips(tips);
+            }
+        }
+    }
 
+    #region Tips相关
     public void AddTips(string tips)
     {
         // 防止多个线程同时访问
@@ -64,18 +80,70 @@ public class DynamicWnd : WindowRoot
         {
             cb();
         }
+    } 
+    #endregion
+
+    public void AddHpItemInfo(string key, Transform trans, int hp)
+    {
+        ItemEntityHp item = null;
+        if (itemDic.TryGetValue(key, out item))
+        {
+            return;
+        }
+        else
+        {
+            GameObject go = resSvc.LoadPrefab(PathDefine.HPItemPrefab, true);
+            go.transform.SetParent(hpItemRoot);
+            go.transform.localPosition = new Vector3(-1000, 0, 0);
+            ItemEntityHp ieh = go.GetComponent<ItemEntityHp>();
+            ieh.SetItemInfo(trans, hp);
+            itemDic.Add(key, ieh);
+        }
     }
 
-    private void Update()
+    public void RemoveHpItemInfo(string key)
     {
-        if (tipsQue.Count > 0 && isTipsShow == false)
+        ItemEntityHp item = null;
+        if (itemDic.TryGetValue(key, out item))
         {
-            lock(tipsQue)
-            {
-                string tips = tipsQue.Dequeue();
-                isTipsShow = true;
-                SetTips(tips);
-            }
+            Destroy(item.gameObject);
+            itemDic.Remove(key);
+        }
+    }
+
+    public void SetDodge(string key)
+    {
+        ItemEntityHp item = null;
+        if (itemDic.TryGetValue(key,out item))
+        {
+            item.SetDodge();
+        }
+    }
+
+    public void SetCritical(string key, int critical)
+    {
+        ItemEntityHp item = null;
+        if (itemDic.TryGetValue(key, out item))
+        {
+            item.SetCritical(critical);
+        }
+    }
+
+    public void SetHurt(string key, int hurt)
+    {
+        ItemEntityHp item = null;
+        if (itemDic.TryGetValue(key, out item))
+        {
+            item.SetHurt(hurt);
+        }
+    }
+
+    public void SetHpVal(string key, int oldVal, int newVal)
+    {
+        ItemEntityHp item = null;
+        if (itemDic.TryGetValue(key, out item))
+        {
+            item.SetHpVal(oldVal, newVal);
         }
     }
 }

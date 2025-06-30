@@ -726,6 +726,11 @@ public class ResSvc : MonoBehaviour
                                 sc.skillName = e.InnerText;
                             }
                             break;
+                        case "cdTime":
+                            {
+                                sc.cdTime = int.Parse(e.InnerText);
+                            }
+                            break;
                         case "skillTime":
                             {
                                 sc.skillTime = int.Parse(e.InnerText);
@@ -739,6 +744,11 @@ public class ResSvc : MonoBehaviour
                         case "fx":
                             {
                                 sc.fx = e.InnerText;
+                            }
+                            break;
+                        case "isCombo":
+                            {
+                                sc.isCombo = e.InnerText.Equals("1");
                             }
                             break;
                         case "dmgType":

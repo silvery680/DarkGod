@@ -5,10 +5,7 @@
 	Description: 技能管理器
 *********************************************************************/
 
-using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor.Graphs;
 using UnityEngine;
 
 public class SkillMgr : MonoBehaviour
@@ -88,6 +85,7 @@ public class SkillMgr : MonoBehaviour
             {
                 // UI显示闪避 TODO
                 PECommon.Log("闪避Rate:" + dodgeNum + "/" + target.BattleProps.dodge);
+                target.SetDodge();
                 return;
             }
             // 计算属性加成
@@ -100,6 +98,7 @@ public class SkillMgr : MonoBehaviour
                 float criticalRate = 1 + (PETools.RDInt(1, 100, rd) / 100.0f);
                 dmgSum = (int)(criticalRate * dmgSum);
                 PECommon.Log("暴击Rate:" + criticalRate + "/" + caster.BattleProps.critical);
+                target.SetCritical(dmgSum);
             }
 
             // 计算穿甲
@@ -123,12 +122,14 @@ public class SkillMgr : MonoBehaviour
             dmgSum = 0;
             return;
         }
+        target.SetHurt(dmgSum);
 
         if (target.HP < dmgSum)
         {
             target.HP = 0;
-            // 目标死亡 TODO
+            // 目标死亡
             target.Die();
+            target.battleMgr.RemoveMonster(target.Name);
         }
         else
         {
@@ -172,6 +173,21 @@ public class SkillMgr : MonoBehaviour
     /// <param name="skillID">技能ID</param>
     private void AttackEffect(EntityBase entity, SkillCfg skillCfg)
     {
+        if (entity.GetDirInput() == Vector2.zero)
+        {
+            // 搜索最近的怪物
+            Vector2 dir = entity.CalcTargetDir();
+            if (dir != Vector2.zero)
+            {
+                entity.SetAtkRotation(dir);
+            }
+        }
+        else
+        {
+            entity.SetAtkRotation(entity.GetDirInput(), true);
+        }
+
+        Debug.Log("1 : " + entity.controller.transform.forward);
         entity.SetAction(skillCfg.aniAction);
         entity.SetFx(skillCfg.fx, skillCfg.skillTime);
 
